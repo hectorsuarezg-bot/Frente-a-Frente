@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Observatorio de Blindaje & Bienestar Digital</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
+    .fade-enter { animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px) scale(0.99); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
+
+  <!-- Barra Superior -->
+  <header class="w-full border-b border-slate-800/80 bg-slate-900/50 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-5xl mx-auto px-4 py-3.5 flex items-center justify-between">
+      <div class="flex items-center space-x-2">
+        <span class="text-xl">🛡️</span>
+        <span class="font-bold tracking-tight text-white text-sm sm:text-base">Blindaje<span class="text-indigo-400">Digital</span></span>
+      </div>
+      <div class="text-[11px] font-semibold tracking-wider uppercase px-2.5 py-1 bg-indigo-500/10 text-indigo-300 rounded-full border border-indigo-500/20">
+        Barómetro 2026
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenedor Principal Dinámico -->
+  <main class="flex-grow flex items-center justify-center px-4 py-8 sm:py-12">
+    <div class="w-full max-w-xl mx-auto">
+      
+      <!-- PANTALLA 1: Bienvenida y Selección de Perfil -->
+      <section id="step-intro" class="fade-enter text-center">
+        <div class="inline-flex items-center gap-2 bg-indigo-500/10 text-indigo-400 text-xs font-semibold px-3.5 py-1.5 rounded-full mb-6 border border-indigo-500/20">
+          <span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span> Triaje Preventivo Confidencial
+        </div>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-4 leading-tight">
+          Descubre tu nivel de <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-sky-400 to-emerald-400">Blindaje Digital</span>
+        </h1>
+        <p class="text-slate-400 text-sm sm:text-base leading-relaxed mb-8 max-w-md mx-auto">
+          Evalúa en 2 minutos tu exposición en redes sociales, riesgos de ciberacoso y hábitos de bienestar digital.
+        </p>
+
+        <div class="space-y-3">
+          <button onclick="startQuiz('menor')" class="w-full p-4 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-indigo-500 active:scale-[0.98] transition-all flex items-center gap-4 text-left group">
+            <div class="w-12 h-12 rounded-xl bg-indigo-500/10 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">⚡</div>
+            <div class="flex-1">
+              <h2 class="font-bold text-white text-base">Tengo entre 12 y 17 años</h2>
+              <p class="text-xs text-slate-400">Verifica tu privacidad en redes, juegos y chats.</p>
+            </div>
+          </button>
+
+          <button onclick="startQuiz('familia')" class="w-full p-4 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-sky-500 active:scale-[0.98] transition-all flex items-center gap-4 text-left group">
+            <div class="w-12 h-12 rounded-xl bg-sky-500/10 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">👨‍👩‍👧</div>
+            <div class="flex-1">
+              <h2 class="font-bold text-white text-base">Soy madre, padre o tutor</h2>
+              <p class="text-xs text-slate-400">Termómetro de convivencia digital y alertas del hogar.</p>
+            </div>
+          </button>
+
+          <button onclick="startQuiz('docente')" class="w-full p-4 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-emerald-500 active:scale-[0.98] transition-all flex items-center gap-4 text-left group">
+            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">🏫</div>
+            <div class="flex-1">
+              <h2 class="font-bold text-white text-base">Docente o Profesional</h2>
+              <p class="text-xs text-slate-400">Detección temprana y protocolo ante incidentes digitales.</p>
+            </div>
+          </button>
+        </div>
+      </section>
+
+      <!-- PANTALLA 2: Formulario Pregunta a Pregunta -->
+      <section id="step-quiz" class="hidden">
+        <!-- Barra de Progreso -->
+        <div class="mb-6">
+          <div class="flex justify-between items-center text-xs font-semibold text-slate-400 mb-2">
+            <span id="quiz-badge" class="uppercase tracking-wider text-indigo-400">Pregunta 1 de 4</span>
+            <span id="quiz-percent">25%</span>
+          </div>
+          <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+            <div id="progress-bar" class="h-full bg-gradient-to-r from-indigo-500 to-sky-400 transition-all duration-300 ease-out" style="width: 25%"></div>
+          </div>
+        </div>
+
+        <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl fade-enter">
+          <h2 id="question-text" class="text-lg sm:text-xl font-bold text-white mb-6 leading-snug"></h2>
+          <div id="answers-container" class="space-y-3"></div>
+        </div>
+      </section>
+
+      <!-- PANTALLA 3: Resultados y Captura de Contacto -->
+      <section id="step-result" class="hidden fade-enter">
+        <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 text-center shadow-xl">
+          <div id="result-icon" class="w-16 h-16 mx-auto mb-4 rounded-2xl flex items-center justify-center text-3xl"></div>
+          <h2 id="result-title" class="text-2xl font-extrabold text-white mb-2"></h2>
+          <p id="result-desc" class="text-sm text-slate-300 leading-relaxed mb-6"></p>
+
+          <div class="bg-slate-950/60 rounded-2xl p-4 border border-slate-800 mb-6 text-left">
+            <span class="text-xs font-semibold uppercase tracking-wider text-indigo-400 block mb-2">Dictamen de triaje preliminar:</span>
+            <ul id="result-points" class="space-y-2 text-xs text-slate-300"></ul>
+          </div>
+
+          <!-- Formulario de Envío de Resultados -->
+          <form id="contact-form" onsubmit="submitResults(event)" class="space-y-3 text-left">
+            <label class="block text-xs font-medium text-slate-400">Recibe tu informe técnico completo y plan de acción preventivo:</label>
+            <div class="flex flex-col sm:flex-row gap-2">
+              <input type="email" required id="user-email" placeholder="tu@email.com" class="flex-grow bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-colors">
+              <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm px-6 py-3 rounded-xl transition-all active:scale-95 whitespace-nowrap">
+                Solicitar Acceso
+              </button>
+            </div>
+            <p class="text-[11px] text-slate-500 text-center sm:text-left">🔒 Máxima reserva y confidencialidad. Sin spam.</p>
+          </form>
+
+          <div id="success-msg" class="hidden text-emerald-400 text-sm font-semibold mt-4">
+            ✓ Diagnóstico enviado. Un especialista multidisciplinar analizará tu caso con absoluta reserva.
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Pie de página discreto -->
+  <footer class="border-t border-slate-900 bg-slate-950 py-6 px-4 text-center">
+    <p class="text-xs text-slate-500 max-w-sm mx-auto">
+      Red interdisciplinar en protección jurídica del menor, psicología digital y mediación.
+    </p>
+  </footer>
+
+  <!-- Lógica Dinámica en JavaScript -->
+  <script>
+    const quizData = {
+      menor: [
+        {
+          q: "¿Alguna vez te han contactado perfiles desconocidos en juegos o redes pidiéndote no contarlo a tus padres?",
+          a: [
+            { text: "Nunca, bloqueo al instante", points: 0 },
+            { text: "Me ha pasado alguna vez y me pareció raro", points: 2 },
+            { text: "Sí, y he llegado a compartir fotos o detalles personales", points: 4 }
+          ]
+        },
+        {
+          q: "¿Qué haces cuando sientes el impulso de mirar el móvil sin motivo constante?",
+          a: [
+            { text: "Puedo dejarlo horas sin problema", points: 0 },
+            { text: "A veces me da ansiedad o FOMO no contestar al momento", points: 2 },
+            { text: "No puedo desconectar ni para dormir", points: 3 }
+          ]
+        },
+        {
+          q: "¿Has visto circular stickers, fotos editadas o audios de conocidos sin su permiso?",
+          a: [
+            { text: "No, en mi entorno respetamos eso", points: 0 },
+            { text: "Sí, en grupos de WhatsApp o canales de difusión", points: 3 },
+            { text: "Incluso me ha pasado a mí directamente", points: 4 }
+          ]
+        }
+      ],
+      familia: [
+        {
+          q: "¿Existen en casa normas claras y respetadas sobre horarios de pantallas?",
+          a: [
+            { text: "Sí, hay consenso familiar y límites claros", points: 0 },
+            { text: "Hay normas pero cuesta mucho hacerlas cumplir", points: 2 },
+            { text: "Es motivo diario de conflictos graves o aislamiento", points: 4 }
+          ]
+        },
+        {
+          q: "¿Conoce con exactitud qué redes utiliza su hijo/a y con quién interactúa en línea?",
+          a: [
+            { text: "Sí, mantenemos un canal de diálogo abierto", points: 0 },
+            { text: "Sé las apps principales, pero no controlo los chats", points: 2 },
+            { text: "Existe total hermetismo por parte del menor", points: 3 }
+          ]
+        },
+        {
+          q: "¿Sabría cómo actuar legal y digitalmente ante una difusión de imágenes no consentida?",
+          a: [
+            { text: "Conozco los canales de retirada urgente y denuncia", points: 0 },
+            { text: "Tendría dudas de a qué instancia acudir primero", points: 2 },
+            { text: "Desconozco completamente los protocolos vigentes", points: 3 }
+          ]
+        }
+      ],
+      docente: [
+        {
+          q: "¿Cuenta el centro con un protocolo activo frente a delitos digitales cometidos con IA o difamación?",
+          a: [
+            { text: "Sí, actualizado y conocido por el claustro", points: 0 },
+            { text: "Hay pautas generales de acoso, pero no específicas digitales", points: 2 },
+            { text: "No existe un protocolo técnico-jurídico definido", points: 4 }
+          ]
+        },
+        {
+          q: "¿Han detectado casos de ciberacoso que trascienden el horario lectivo a través de grupos?",
+          a: [
+            { text: "Rara vez o nula incidencia", points: 0 },
+            { text: "Ocasionalmente, generando tensión en clase", points: 2 },
+            { text: "Es un problema recurrente y complejo de gestionar", points: 4 }
+          ]
+        }
+      ]
+    };
+
+    let currentProfile = '';
+    let currentQuestionIdx = 0;
+    let totalScore = 0;
+    let answersLog = [];
+
+    function startQuiz(profile) {
+      currentProfile = profile;
+      currentQuestionIdx = 0;
+      totalScore = 0;
+      answersLog = [];
+      document.getElementById('step-intro').classList.add('hidden');
+      document.getElementById('step-quiz').classList.remove('hidden');
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      const questions = quizData[currentProfile];
+      const q = questions[currentQuestionIdx];
+      
+      document.getElementById('quiz-badge').innerText = `Pregunta ${currentQuestionIdx + 1} de ${questions.length}`;
+      const percent = Math.round(((currentQuestionIdx + 1) / questions.length) * 100);
+      document.getElementById('quiz-percent').innerText = `${percent}%`;
+      document.getElementById('progress-bar').style.width = `${percent}%`;
+
+      document.getElementById('question-text').innerText = q.q;
+      const container = document.getElementById('answers-container');
+      container.innerHTML = '';
+
+      q.a.forEach((opt) => {
+        const btn = document.createElement('button');
+        btn.className = "w-full p-4 rounded-xl bg-slate-950/80 border border-slate-800 hover:border-indigo-400 active:scale-[0.99] text-left text-sm text-slate-200 hover:text-white transition-all flex items-center justify-between";
+        btn.innerHTML = `<span>${opt.text}</span><span class="text-slate-600">→</span>`;
+        btn.onclick = () => selectOption(opt.points, opt.text);
+        container.appendChild(btn);
+      });
+    }
+
+    function selectOption(points, answerText) {
+      totalScore += points;
+      answersLog.push({ question: quizData[currentProfile][currentQuestionIdx].q, answer: answerText });
+      currentQuestionIdx++;
+
+      if (currentQuestionIdx < quizData[currentProfile].length) {
+        renderQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+    function showResults() {
+      document.getElementById('step-quiz').classList.add('hidden');
+      document.getElementById('step-result').classList.remove('hidden');
+
+      const iconEl = document.getElementById('result-icon');
+      const titleEl = document.getElementById('result-title');
+      const descEl = document.getElementById('result-desc');
+      const pointsEl = document.getElementById('result-points');
+
+      if (totalScore >= 6) {
+        iconEl.className = "w-16 h-16 mx-auto mb-4 rounded-2xl flex items-center justify-center text-3xl bg-rose-500/10 text-rose-400 border border-rose-500/20";
+        iconEl.innerText = "⚠️";
+        titleEl.innerText = "Nivel de Exposición Crítico";
+        descEl.innerText = "Se detectan patrones de alta vulnerabilidad legal y emocional que requieren contención inmediata.";
+        pointsEl.innerHTML = `
+          <li>• Riesgo apreciable de infracción en materia de protección de datos o intimidad.</li>
+          <li>• Señales de alerta psicológica vinculadas a sobreexposición o estrés digital.</li>
+          <li>• Recomendable mediación profesional y formalización de protocolos preventivos.</li>
+        `;
+      } else {
+        iconEl.className = "w-16 h-16 mx-auto mb-4 rounded-2xl flex items-center justify-center text-3xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20";
+        iconEl.innerText = "🛡️";
+        titleEl.innerText = "Nivel de Blindaje Estable";
+        descEl.innerText = "Dispones de hábitos defensivos, aunque existen áreas de optimización técnica y legal.";
+        pointsEl.innerHTML = `
+          <li>• Hábitos conscientes frente a contactos externos no deseados.</li>
+          <li>• Oportunidad para formalizar acuerdos de convivencia digital a largo plazo.</li>
+        `;
+      }
+    }
+
+    function submitResults(e) {
+      e.preventDefault();
+      const email = document.getElementById('user-email').value;
+      
+      const leadData = {
+        perfil: currentProfile,
+        score: totalScore,
+        email: email,
+        respuestas: answersLog,
+        fecha: new Date().toISOString()
+      };
+      
+      console.log("Datos capturados para el despacho:", leadData);
+
+      document.getElementById('contact-form').classList.add('hidden');
+      document.getElementById('success-msg').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
