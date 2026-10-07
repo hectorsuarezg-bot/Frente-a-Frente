@@ -22,27 +22,16 @@
       50% { opacity: 1; transform: scale(1.2) translateY(-10px); }
       100% { opacity: 0; transform: scale(1) translateY(-25px); }
     }
-    /* Estilo para que los desplegables siempre sean clickeables y visibles */
-    select {
-      background-color: #020617 !important;
-      color: #f8fafc !important;
-      cursor: pointer;
-    }
-    select option {
-      background-color: #0f172a;
-      color: #f8fafc;
-      padding: 8px;
-    }
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-indigo-500 selection:text-white relative">
 
-  <!-- Feedback Flotante de Emoticonos (solo se activa cuando se responde una pregunta) -->
+  <!-- Animación de Emoticono al responder (Menores) -->
   <div id="emoji-floater" style="display: none;" class="fixed inset-0 pointer-events-none z-50 flex items-center justify-center">
     <span id="emoji-char" class="text-7xl emoji-pop filter drop-shadow-lg"></span>
   </div>
 
-  <!-- Barra Superior -->
+  <!-- Barra Superior de Navegación -->
   <header class="w-full border-b border-slate-800/80 bg-slate-900/80 backdrop-blur-md sticky top-0 z-30">
     <div class="max-w-5xl mx-auto px-4 py-2.5 flex items-center justify-between">
       <div class="flex items-center gap-3">
@@ -68,15 +57,19 @@
   <main class="flex-grow flex items-center justify-center px-4 py-6 sm:py-10 relative z-10">
     <div class="w-full max-w-xl mx-auto">
       
-      <!-- PANTALLA 1: Bienvenida y Selección con Desplegables -->
+      <!-- PANTALLA 1: Portada y Selección Inmediata -->
       <section id="step-intro" class="fade-enter text-center">
-        <div class="flex justify-center mb-4">
-          <img 
-            src="photo.jpg" 
-            alt="Logo Frente a Frente" 
-            class="h-20 w-20 sm:h-24 sm:w-24 object-cover rounded-2xl shadow-xl border-2 border-indigo-500/30"
-            onerror="this.style.display='none'"
-          >
+        <!-- LOGO CENTRAL EN TAMAÑO EXTRA GRANDE Y DESTACADO -->
+        <div class="flex justify-center mb-6">
+          <div class="relative group">
+            <div class="absolute -inset-1 bg-gradient-to-r from-indigo-500 via-sky-500 to-emerald-500 rounded-3xl blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
+            <img 
+              src="photo.jpg" 
+              alt="Logo Frente a Frente" 
+              class="relative h-36 w-36 sm:h-44 sm:w-44 md:h-48 md:w-48 object-cover rounded-3xl shadow-2xl border-2 border-indigo-500/40"
+              onerror="this.style.display='none'"
+            >
+          </div>
         </div>
 
         <div class="inline-flex items-center gap-2 bg-indigo-500/10 text-indigo-400 text-xs font-semibold px-3 py-1 rounded-full mb-3 border border-indigo-500/20">
@@ -87,86 +80,65 @@
           Nivel de <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-sky-400 to-emerald-400">Blindaje Digital</span>
         </h1>
         <p class="text-slate-400 text-xs sm:text-sm leading-relaxed mb-6 max-w-md mx-auto">
-          Métricas y casuística de UNICEF, INCIBE y Save the Children ante la protección integral del menor en el entorno digital.
+          Pulsa tu edad o perfil para iniciar la evaluación técnica y psicológica confidencial.
         </p>
 
-        <!-- Bloque de Perfiles -->
+        <!-- Bloque de Selección Directa -->
         <div class="space-y-4 text-left">
           
-          <!-- Opción 1: Menores (12 a 17 años) -->
-          <div class="p-4 rounded-2xl bg-slate-900/95 border border-slate-800 hover:border-indigo-500 transition-all">
+          <!-- SECCIÓN 1: Menor (12-17 años) con botones directos -->
+          <div class="p-4 sm:p-5 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-indigo-500 transition-all">
             <div class="flex items-center gap-3 mb-3">
               <div class="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center text-xl">⚡</div>
               <div>
-                <h2 class="font-bold text-white text-sm sm:text-base">Adolescente (12 a 17 años)</h2>
-                <p class="text-xs text-slate-400">Privacidad, grupos de clase, retos virales, IA y bienestar digital.</p>
+                <h2 class="font-bold text-white text-sm sm:text-base">Adolescentes (12 a 17 años)</h2>
+                <p class="text-xs text-slate-400">Elige tu edad para comenzar el test inmediatamente:</p>
               </div>
             </div>
             
-            <label class="block text-[11px] font-semibold text-slate-300 mb-1.5">Selecciona tu edad:</label>
-            <div class="flex flex-col sm:flex-row gap-2">
-              <select id="age-menor" class="w-full sm:w-1/2 bg-slate-950 text-white border border-slate-700 text-sm rounded-xl px-3 py-2.5 focus:outline-none focus:border-indigo-500">
-                <option value="" disabled selected>-- Elige tu edad --</option>
-                <option value="12">12 años</option>
-                <option value="13">13 años</option>
-                <option value="14">14 años</option>
-                <option value="15">15 años</option>
-                <option value="16">16 años</option>
-                <option value="17">17 años</option>
-              </select>
-              <button onclick="checkAndStart('menor')" class="w-full sm:flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs sm:text-sm py-2.5 rounded-xl transition-all shadow-md active:scale-95">
-                Iniciar Test
-              </button>
+            <div class="grid grid-cols-3 sm:grid-cols-6 gap-2 pt-1">
+              <button onclick="startTest('menor', '12 años')" class="bg-indigo-950/70 hover:bg-indigo-600 border border-indigo-500/30 text-white font-bold text-xs py-2.5 rounded-xl transition-all active:scale-95 text-center">12 años</button>
+              <button onclick="startTest('menor', '13 años')" class="bg-indigo-950/70 hover:bg-indigo-600 border border-indigo-500/30 text-white font-bold text-xs py-2.5 rounded-xl transition-all active:scale-95 text-center">13 años</button>
+              <button onclick="startTest('menor', '14 años')" class="bg-indigo-950/70 hover:bg-indigo-600 border border-indigo-500/30 text-white font-bold text-xs py-2.5 rounded-xl transition-all active:scale-95 text-center">14 años</button>
+              <button onclick="startTest('menor', '15 años')" class="bg-indigo-950/70 hover:bg-indigo-600 border border-indigo-500/30 text-white font-bold text-xs py-2.5 rounded-xl transition-all active:scale-95 text-center">15 años</button>
+              <button onclick="startTest('menor', '16 años')" class="bg-indigo-950/70 hover:bg-indigo-600 border border-indigo-500/30 text-white font-bold text-xs py-2.5 rounded-xl transition-all active:scale-95 text-center">16 años</button>
+              <button onclick="startTest('menor', '17 años')" class="bg-indigo-950/70 hover:bg-indigo-600 border border-indigo-500/30 text-white font-bold text-xs py-2.5 rounded-xl transition-all active:scale-95 text-center">17 años</button>
             </div>
           </div>
 
-          <!-- Opción 2: Familias -->
-          <div class="p-4 rounded-2xl bg-slate-900/95 border border-slate-800 hover:border-sky-500 transition-all">
+          <!-- SECCIÓN 2: Madres, Padres o Tutores -->
+          <div class="p-4 sm:p-5 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-sky-500 transition-all">
             <div class="flex items-center gap-3 mb-3">
               <div class="w-10 h-10 rounded-xl bg-sky-500/10 flex items-center justify-center text-xl">👨‍👩‍👧</div>
               <div>
-                <h2 class="font-bold text-white text-sm sm:text-base">Madre, Padre o Tutor</h2>
-                <p class="text-xs text-slate-400">Límites, mediación parental, compras in-app y protocolos de alarma.</p>
+                <h2 class="font-bold text-white text-sm sm:text-base">Madre, Padre o Tutor Legal</h2>
+                <p class="text-xs text-slate-400">Seleccione el tramo de edad de su hijo/a:</p>
               </div>
             </div>
             
-            <label class="block text-[11px] font-semibold text-slate-300 mb-1.5">Edad de su hijo/a principal:</label>
-            <div class="flex flex-col sm:flex-row gap-2">
-              <select id="age-familia" class="w-full sm:w-1/2 bg-slate-950 text-white border border-slate-700 text-sm rounded-xl px-3 py-2.5 focus:outline-none focus:border-sky-500">
-                <option value="" disabled selected>-- Elige tramo --</option>
-                <option value="menor-12">Menor de 12 años</option>
-                <option value="12-14">De 12 a 14 años (1º/2º ESO)</option>
-                <option value="15-17">De 15 a 17 años (3º/4º ESO - Bach/FP)</option>
-                <option value="varios">Varios hijos en diferentes edades</option>
-              </select>
-              <button onclick="checkAndStart('familia')" class="w-full sm:flex-1 bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs sm:text-sm py-2.5 rounded-xl transition-all shadow-md active:scale-95">
-                Iniciar Test
-              </button>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+              <button onclick="startTest('familia', 'Menor de 12 años')" class="bg-sky-950/50 hover:bg-sky-600 border border-sky-500/30 text-slate-200 hover:text-white font-semibold text-xs py-2.5 px-3 rounded-xl transition-all active:scale-95 text-left">🔹 Menor de 12 años</button>
+              <button onclick="startTest('familia', '12 a 14 años')" class="bg-sky-950/50 hover:bg-sky-600 border border-sky-500/30 text-slate-200 hover:text-white font-semibold text-xs py-2.5 px-3 rounded-xl transition-all active:scale-95 text-left">🔹 12 a 14 años (1º/2º ESO)</button>
+              <button onclick="startTest('familia', '15 a 17 años')" class="bg-sky-950/50 hover:bg-sky-600 border border-sky-500/30 text-slate-200 hover:text-white font-semibold text-xs py-2.5 px-3 rounded-xl transition-all active:scale-95 text-left">🔹 15 a 17 años (3º/4º ESO - Bach)</button>
+              <button onclick="startTest('familia', 'Varios tramos de edad')" class="bg-sky-950/50 hover:bg-sky-600 border border-sky-500/30 text-slate-200 hover:text-white font-semibold text-xs py-2.5 px-3 rounded-xl transition-all active:scale-95 text-left">🔹 Varios hijos en el hogar</button>
             </div>
           </div>
 
-          <!-- Opción 3: Docentes / Profesionales -->
-          <div class="p-4 rounded-2xl bg-slate-900/95 border border-slate-800 hover:border-emerald-500 transition-all">
+          <!-- SECCIÓN 3: Docentes / Centros Educativos -->
+          <div class="p-4 sm:p-5 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-emerald-500 transition-all">
             <div class="flex items-center gap-3 mb-3">
               <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-xl">🏫</div>
               <div>
-                <h2 class="font-bold text-white text-sm sm:text-base">Docente o Profesional de la Educación</h2>
-                <p class="text-xs text-slate-400">Responsabilidad civil in vigilando, ciberconvivencia y LOPIVI.</p>
+                <h2 class="font-bold text-white text-sm sm:text-base">Docente o Equipo Directivo</h2>
+                <p class="text-xs text-slate-400">Seleccione la etapa de su centro escolar:</p>
               </div>
             </div>
             
-            <label class="block text-[11px] font-semibold text-slate-300 mb-1.5">Etapa educativa del centro:</label>
-            <div class="flex flex-col sm:flex-row gap-2">
-              <select id="stage-docente" class="w-full sm:w-1/2 bg-slate-950 text-white border border-slate-700 text-sm rounded-xl px-3 py-2.5 focus:outline-none focus:border-emerald-500">
-                <option value="" disabled selected>-- Elige etapa --</option>
-                <option value="primaria">Primaria (hasta 12 años)</option>
-                <option value="eso">Secundaria Obligatoria (ESO)</option>
-                <option value="bach-fp">Bachillerato / Formación Profesional</option>
-                <option value="orientador">Gabinete de Orientación / Dirección</option>
-              </select>
-              <button onclick="checkAndStart('docente')" class="w-full sm:flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm py-2.5 rounded-xl transition-all shadow-md active:scale-95">
-                Iniciar Test
-              </button>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+              <button onclick="startTest('docente', 'Primaria')" class="bg-emerald-950/50 hover:bg-emerald-600 border border-emerald-500/30 text-slate-200 hover:text-white font-semibold text-xs py-2.5 px-3 rounded-xl transition-all active:scale-95 text-left">🏫 Primaria (hasta 12 años)</button>
+              <button onclick="startTest('docente', 'Secundaria ESO')" class="bg-emerald-950/50 hover:bg-emerald-600 border border-emerald-500/30 text-slate-200 hover:text-white font-semibold text-xs py-2.5 px-3 rounded-xl transition-all active:scale-95 text-left">🏫 Secundaria Obligatoria (ESO)</button>
+              <button onclick="startTest('docente', 'Bachillerato / FP')" class="bg-emerald-950/50 hover:bg-emerald-600 border border-emerald-500/30 text-slate-200 hover:text-white font-semibold text-xs py-2.5 px-3 rounded-xl transition-all active:scale-95 text-left">🏫 Bachillerato o Formación Prof.</button>
+              <button onclick="startTest('docente', 'Orientación / Dirección')" class="bg-emerald-950/50 hover:bg-emerald-600 border border-emerald-500/30 text-slate-200 hover:text-white font-semibold text-xs py-2.5 px-3 rounded-xl transition-all active:scale-95 text-left">🏫 Gabinete de Orientación / LOPIVI</button>
             </div>
           </div>
 
@@ -192,7 +164,7 @@
         </div>
       </section>
 
-      <!-- PANTALLA 3: Resultados -->
+      <!-- PANTALLA 3: Dictamen de Resultados -->
       <section id="step-result" class="hidden fade-enter">
         <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 text-center shadow-xl">
           <div id="result-icon" class="w-16 h-16 mx-auto mb-3 rounded-2xl flex items-center justify-center text-3xl"></div>
@@ -283,7 +255,7 @@
         },
         {
           cat: "Sexting & Presiones",
-          q: "6. Según estadísticas oficiales, a 1 de cada 10 menores les piden fotos íntimas. ¿Alguna vez alguien ha insistido en que le mandes fotos privadas?",
+          q: "6. Según estadísticas de UNICEF, a 1 de cada 10 menores les piden fotos íntimas. ¿Alguna vez alguien ha insistido en que le mandes fotos privadas?",
           a: [
             { text: "Nunca me lo han pedido o me he negado tajantemente.", points: 0, emoji: "🚫" },
             { text: "Me han presionado sutilmente con la excusa de la confianza.", points: 2, emoji: "😬" },
@@ -381,25 +353,9 @@
     let totalScore = 0;
     let answersLog = [];
 
-    function checkAndStart(profile) {
-      if (profile === 'menor') {
-        const sel = document.getElementById('age-menor');
-        const val = sel ? sel.value : '';
-        if (!val) { alert("Por favor, selecciona tu edad en el desplegable para personalizar tu test."); return; }
-        currentDetail = `${val} años`;
-      } else if (profile === 'familia') {
-        const sel = document.getElementById('age-familia');
-        const val = sel ? sel.value : '';
-        if (!val) { alert("Por favor, selecciona el tramo de edad de su hijo/a en el desplegable."); return; }
-        currentDetail = val;
-      } else if (profile === 'docente') {
-        const sel = document.getElementById('stage-docente');
-        const val = sel ? sel.value : '';
-        if (!val) { alert("Por favor, selecciona la etapa educativa de su centro."); return; }
-        currentDetail = val;
-      }
-
+    function startTest(profile, detail) {
       currentProfile = profile;
+      currentDetail = detail;
       currentQuestionIdx = 0;
       totalScore = 0;
       answersLog = [];
@@ -413,7 +369,7 @@
       const questions = quizData[currentProfile];
       const q = questions[currentQuestionIdx];
       
-      document.getElementById('quiz-badge').innerText = `Pregunta ${currentQuestionIdx + 1} de ${questions.length}`;
+      document.getElementById('quiz-badge').innerText = `Pregunta ${currentQuestionIdx + 1} de ${questions.length} (${currentDetail})`;
       const percent = Math.round(((currentQuestionIdx + 1) / questions.length) * 100);
       document.getElementById('quiz-percent').innerText = `${percent}%`;
       document.getElementById('progress-bar').style.width = `${percent}%`;
