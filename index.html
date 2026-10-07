@@ -6,9 +6,10 @@
   <title>Frente a Frente · Barómetro de Blindaje & Convivencia Digital</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
+    .handwriting { font-family: 'Caveat', cursive; }
     .fade-enter { animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(6px); }
@@ -21,6 +22,21 @@
       0% { opacity: 0; transform: scale(0.3) translateY(10px); }
       50% { opacity: 1; transform: scale(1.2) translateY(-10px); }
       100% { opacity: 0; transform: scale(1) translateY(-25px); }
+    }
+    .notebook-paper {
+      background-color: #0f172a;
+      background-image: 
+        linear-gradient(to right, rgba(99, 102, 241, 0.08) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(99, 102, 241, 0.08) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+    @keyframes stampAnim {
+      0% { opacity: 0; transform: scale(2) rotate(-15deg); }
+      70% { opacity: 1; transform: scale(0.9) rotate(-6deg); }
+      100% { opacity: 1; transform: scale(1) rotate(-8deg); }
+    }
+    .stamp-effect {
+      animation: stampAnim 0.45s ease-out forwards;
     }
   </style>
 </head>
@@ -59,7 +75,7 @@
       
       <!-- PANTALLA 1: Portada y Selección Inmediata -->
       <section id="step-intro" class="fade-enter text-center">
-        <!-- LOGO CENTRAL EN TAMAÑO EXTRA GRANDE Y DESTACADO -->
+        <!-- LOGO CENTRAL DESTACADO -->
         <div class="flex justify-center mb-6">
           <div class="relative group">
             <div class="absolute -inset-1 bg-gradient-to-r from-indigo-500 via-sky-500 to-emerald-500 rounded-3xl blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
@@ -97,12 +113,12 @@
             </div>
             
             <div class="grid grid-cols-3 sm:grid-cols-6 gap-2 pt-1">
-              <button onclick="startTest('menor', '12 años')" class="bg-indigo-950/70 hover:bg-indigo-600 border border-indigo-500/30 text-white font-bold text-xs py-2.5 rounded-xl transition-all active:scale-95 text-center">12 años</button>
-              <button onclick="startTest('menor', '13 años')" class="bg-indigo-950/70 hover:bg-indigo-600 border border-indigo-500/30 text-white font-bold text-xs py-2.5 rounded-xl transition-all active:scale-95 text-center">13 años</button>
-              <button onclick="startTest('menor', '14 años')" class="bg-indigo-950/70 hover:bg-indigo-600 border border-indigo-500/30 text-white font-bold text-xs py-2.5 rounded-xl transition-all active:scale-95 text-center">14 años</button>
-              <button onclick="startTest('menor', '15 años')" class="bg-indigo-950/70 hover:bg-indigo-600 border border-indigo-500/30 text-white font-bold text-xs py-2.5 rounded-xl transition-all active:scale-95 text-center">15 años</button>
-              <button onclick="startTest('menor', '16 años')" class="bg-indigo-950/70 hover:bg-indigo-600 border border-indigo-500/30 text-white font-bold text-xs py-2.5 rounded-xl transition-all active:scale-95 text-center">16 años</button>
-              <button onclick="startTest('menor', '17 años')" class="bg-indigo-950/70 hover:bg-indigo-600 border border-indigo-500/30 text-white font-bold text-xs py-2.5 rounded-xl transition-all active:scale-95 text-center">17 años</button>
+              <button type="button" onclick="startTest('menor', '12 años')" class="bg-indigo-950/70 hover:bg-indigo-600 border border-indigo-500/30 text-white font-bold text-xs py-2.5 rounded-xl transition-all active:scale-95 text-center">12 años</button>
+              <button type="button" onclick="startTest('menor', '13 años')" class="bg-indigo-950/70 hover:bg-indigo-600 border border-indigo-500/30 text-white font-bold text-xs py-2.5 rounded-xl transition-all active:scale-95 text-center">13 años</button>
+              <button type="button" onclick="startTest('menor', '14 años')" class="bg-indigo-950/70 hover:bg-indigo-600 border border-indigo-500/30 text-white font-bold text-xs py-2.5 rounded-xl transition-all active:scale-95 text-center">14 años</button>
+              <button type="button" onclick="startTest('menor', '15 años')" class="bg-indigo-950/70 hover:bg-indigo-600 border border-indigo-500/30 text-white font-bold text-xs py-2.5 rounded-xl transition-all active:scale-95 text-center">15 años</button>
+              <button type="button" onclick="startTest('menor', '16 años')" class="bg-indigo-950/70 hover:bg-indigo-600 border border-indigo-500/30 text-white font-bold text-xs py-2.5 rounded-xl transition-all active:scale-95 text-center">16 años</button>
+              <button type="button" onclick="startTest('menor', '17 años')" class="bg-indigo-950/70 hover:bg-indigo-600 border border-indigo-500/30 text-white font-bold text-xs py-2.5 rounded-xl transition-all active:scale-95 text-center">17 años</button>
             </div>
           </div>
 
@@ -117,10 +133,10 @@
             </div>
             
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
-              <button onclick="startTest('familia', 'Menor de 12 años')" class="bg-sky-950/50 hover:bg-sky-600 border border-sky-500/30 text-slate-200 hover:text-white font-semibold text-xs py-2.5 px-3 rounded-xl transition-all active:scale-95 text-left">🔹 Menor de 12 años</button>
-              <button onclick="startTest('familia', '12 a 14 años')" class="bg-sky-950/50 hover:bg-sky-600 border border-sky-500/30 text-slate-200 hover:text-white font-semibold text-xs py-2.5 px-3 rounded-xl transition-all active:scale-95 text-left">🔹 12 a 14 años (1º/2º ESO)</button>
-              <button onclick="startTest('familia', '15 a 17 años')" class="bg-sky-950/50 hover:bg-sky-600 border border-sky-500/30 text-slate-200 hover:text-white font-semibold text-xs py-2.5 px-3 rounded-xl transition-all active:scale-95 text-left">🔹 15 a 17 años (3º/4º ESO - Bach)</button>
-              <button onclick="startTest('familia', 'Varios tramos de edad')" class="bg-sky-950/50 hover:bg-sky-600 border border-sky-500/30 text-slate-200 hover:text-white font-semibold text-xs py-2.5 px-3 rounded-xl transition-all active:scale-95 text-left">🔹 Varios hijos en el hogar</button>
+              <button type="button" onclick="startTest('familia', 'Menor de 12 años')" class="bg-sky-950/50 hover:bg-sky-600 border border-sky-500/30 text-slate-200 hover:text-white font-semibold text-xs py-2.5 px-3 rounded-xl transition-all active:scale-95 text-left">🔹 Menor de 12 años</button>
+              <button type="button" onclick="startTest('familia', '12 a 14 años')" class="bg-sky-950/50 hover:bg-sky-600 border border-sky-500/30 text-slate-200 hover:text-white font-semibold text-xs py-2.5 px-3 rounded-xl transition-all active:scale-95 text-left">🔹 12 a 14 años (1º/2º ESO)</button>
+              <button type="button" onclick="startTest('familia', '15 a 17 años')" class="bg-sky-950/50 hover:bg-sky-600 border border-sky-500/30 text-slate-200 hover:text-white font-semibold text-xs py-2.5 px-3 rounded-xl transition-all active:scale-95 text-left">🔹 15 a 17 años (3º/4º ESO - Bach)</button>
+              <button type="button" onclick="startTest('familia', 'Varios tramos de edad')" class="bg-sky-950/50 hover:bg-sky-600 border border-sky-500/30 text-slate-200 hover:text-white font-semibold text-xs py-2.5 px-3 rounded-xl transition-all active:scale-95 text-left">🔹 Varios hijos en el hogar</button>
             </div>
           </div>
 
@@ -135,10 +151,10 @@
             </div>
             
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
-              <button onclick="startTest('docente', 'Primaria')" class="bg-emerald-950/50 hover:bg-emerald-600 border border-emerald-500/30 text-slate-200 hover:text-white font-semibold text-xs py-2.5 px-3 rounded-xl transition-all active:scale-95 text-left">🏫 Primaria (hasta 12 años)</button>
-              <button onclick="startTest('docente', 'Secundaria ESO')" class="bg-emerald-950/50 hover:bg-emerald-600 border border-emerald-500/30 text-slate-200 hover:text-white font-semibold text-xs py-2.5 px-3 rounded-xl transition-all active:scale-95 text-left">🏫 Secundaria Obligatoria (ESO)</button>
-              <button onclick="startTest('docente', 'Bachillerato / FP')" class="bg-emerald-950/50 hover:bg-emerald-600 border border-emerald-500/30 text-slate-200 hover:text-white font-semibold text-xs py-2.5 px-3 rounded-xl transition-all active:scale-95 text-left">🏫 Bachillerato o Formación Prof.</button>
-              <button onclick="startTest('docente', 'Orientación / Dirección')" class="bg-emerald-950/50 hover:bg-emerald-600 border border-emerald-500/30 text-slate-200 hover:text-white font-semibold text-xs py-2.5 px-3 rounded-xl transition-all active:scale-95 text-left">🏫 Gabinete de Orientación / LOPIVI</button>
+              <button type="button" onclick="startTest('docente', 'Primaria')" class="bg-emerald-950/50 hover:bg-emerald-600 border border-emerald-500/30 text-slate-200 hover:text-white font-semibold text-xs py-2.5 px-3 rounded-xl transition-all active:scale-95 text-left">🏫 Primaria (hasta 12 años)</button>
+              <button type="button" onclick="startTest('docente', 'Secundaria ESO')" class="bg-emerald-950/50 hover:bg-emerald-600 border border-emerald-500/30 text-slate-200 hover:text-white font-semibold text-xs py-2.5 px-3 rounded-xl transition-all active:scale-95 text-left">🏫 Secundaria Obligatoria (ESO)</button>
+              <button type="button" onclick="startTest('docente', 'Bachillerato / FP')" class="bg-emerald-950/50 hover:bg-emerald-600 border border-emerald-500/30 text-slate-200 hover:text-white font-semibold text-xs py-2.5 px-3 rounded-xl transition-all active:scale-95 text-left">🏫 Bachillerato o Formación Prof.</button>
+              <button type="button" onclick="startTest('docente', 'Orientación / Dirección')" class="bg-emerald-950/50 hover:bg-emerald-600 border border-emerald-500/30 text-slate-200 hover:text-white font-semibold text-xs py-2.5 px-3 rounded-xl transition-all active:scale-95 text-left">🏫 Gabinete de Orientación / LOPIVI</button>
             </div>
           </div>
 
@@ -164,7 +180,71 @@
         </div>
       </section>
 
-      <!-- PANTALLA 3: Dictamen de Resultados -->
+      <!-- PANTALLA INTERMEDIA: CUADERNO DIGITAL ANIMADO -->
+      <section id="step-notebook" class="hidden fade-enter">
+        <div class="notebook-paper border-2 border-indigo-500/40 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+          
+          <!-- Espiral superior -->
+          <div class="flex justify-around mb-4 border-b border-indigo-500/20 pb-2">
+            <span class="w-3 h-5 bg-slate-800 rounded-full border border-slate-600 block shadow-inner"></span>
+            <span class="w-3 h-5 bg-slate-800 rounded-full border border-slate-600 block shadow-inner"></span>
+            <span class="w-3 h-5 bg-slate-800 rounded-full border border-slate-600 block shadow-inner"></span>
+            <span class="w-3 h-5 bg-slate-800 rounded-full border border-slate-600 block shadow-inner"></span>
+            <span class="w-3 h-5 bg-slate-800 rounded-full border border-slate-600 block shadow-inner"></span>
+          </div>
+
+          <div class="flex items-center justify-between mb-4">
+            <span class="handwriting text-xl sm:text-2xl text-indigo-300 tracking-wide">Cuaderno de Campo Digital · Frente a Frente</span>
+            <span class="text-[10px] uppercase tracking-wider font-mono px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 animate-pulse">ANALIZANDO</span>
+          </div>
+
+          <!-- Notas manuscritas -->
+          <div class="space-y-3 mb-6">
+            <div id="note-1" class="p-3 bg-indigo-950/60 border-l-4 border-indigo-400 rounded-r-xl transition-all duration-500 opacity-0 transform translate-x-3">
+              <p class="text-xs sm:text-sm font-semibold text-white flex items-center gap-2">
+                <span>🔍</span> <span>Escaneando exposición en redes sociales y juegos...</span>
+              </p>
+            </div>
+
+            <div id="note-2" class="p-3 bg-sky-950/60 border-l-4 border-sky-400 rounded-r-xl transition-all duration-500 opacity-0 transform translate-x-3">
+              <p class="text-xs sm:text-sm font-semibold text-white flex items-center gap-2">
+                <span>🛡️</span> <span>Verificando defensas ante stickers, IA y contactos desconocidos...</span>
+              </p>
+            </div>
+
+            <div id="note-3" class="p-3 bg-amber-950/60 border-l-4 border-amber-400 rounded-r-xl transition-all duration-500 opacity-0 transform translate-x-3">
+              <p class="text-xs sm:text-sm font-semibold text-white flex items-center gap-2">
+                <span>⚖️</span> <span>Calculando índice de bienestar emocional y privacidad legal...</span>
+              </p>
+            </div>
+          </div>
+
+          <!-- Barra de progreso -->
+          <div class="mb-4">
+            <div class="flex justify-between text-[11px] text-slate-400 font-mono mb-1">
+              <span id="notebook-status-text">Procesando respuestas...</span>
+              <span id="notebook-percent">30%</span>
+            </div>
+            <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden border border-slate-700">
+              <div id="notebook-progress" class="h-full bg-gradient-to-r from-indigo-500 via-sky-400 to-emerald-400 transition-all duration-700 ease-out" style="width: 30%"></div>
+            </div>
+          </div>
+
+          <!-- Sello pericial -->
+          <div id="notebook-stamp" class="hidden text-center my-4">
+            <span class="inline-block border-2 border-dashed border-emerald-400 text-emerald-400 font-black text-sm sm:text-base uppercase tracking-widest px-4 py-1.5 rounded-lg stamp-effect shadow-[0_0_15px_rgba(52,211,153,0.3)]">
+              ✔ DICTAMEN DE BLINDAJE LISTO
+            </span>
+          </div>
+
+          <!-- Botón de acceso directo -->
+          <button type="button" onclick="showFinalResultsNow()" class="w-full mt-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs sm:text-sm py-2.5 rounded-xl transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2">
+            <span>Acceder al Resultado</span> <span>→</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- PANTALLA 4: Dictamen de Resultados -->
       <section id="step-result" class="hidden fade-enter">
         <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 text-center shadow-xl">
           <div id="result-icon" class="w-16 h-16 mx-auto mb-3 rounded-2xl flex items-center justify-center text-3xl"></div>
@@ -352,16 +432,29 @@
     let currentQuestionIdx = 0;
     let totalScore = 0;
     let answersLog = [];
+    let isAnswering = false;
+    let notebookTimers = [];
+
+    function clearNotebookTimers() {
+      notebookTimers.forEach(t => clearTimeout(t));
+      notebookTimers = [];
+    }
 
     function startTest(profile, detail) {
+      clearNotebookTimers();
       currentProfile = profile;
       currentDetail = detail;
       currentQuestionIdx = 0;
       totalScore = 0;
       answersLog = [];
+      isAnswering = false;
 
       document.getElementById('step-intro').classList.add('hidden');
+      document.getElementById('step-notebook').classList.add('hidden');
+      document.getElementById('step-result').classList.add('hidden');
       document.getElementById('step-quiz').classList.remove('hidden');
+      
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       renderQuestion();
     }
 
@@ -381,6 +474,7 @@
 
       q.a.forEach((opt) => {
         const btn = document.createElement('button');
+        btn.type = "button";
         btn.className = "w-full p-3.5 sm:p-4 rounded-xl bg-slate-950/80 border border-slate-800 hover:border-indigo-400 active:scale-[0.99] text-left text-xs sm:text-sm text-slate-200 hover:text-white transition-all flex items-center justify-between";
         btn.innerHTML = `<span>${opt.text}</span><span class="text-slate-600 ml-2">→</span>`;
         btn.onclick = () => selectOption(opt.points, opt.text, opt.emoji);
@@ -400,6 +494,9 @@
     }
 
     function selectOption(points, answerText, emoji) {
+      if (isAnswering) return;
+      isAnswering = true;
+
       totalScore += points;
       answersLog.push({ 
         categoria: quizData[currentProfile][currentQuestionIdx].cat,
@@ -413,15 +510,78 @@
 
       currentQuestionIdx++;
       if (currentQuestionIdx < quizData[currentProfile].length) {
-        renderQuestion();
+        setTimeout(() => {
+          renderQuestion();
+          isAnswering = false;
+        }, 150);
       } else {
-        showResults();
+        setTimeout(() => {
+          isAnswering = false;
+          if (currentProfile === 'menor') {
+            launchDigitalNotebook();
+          } else {
+            showFinalResultsNow();
+          }
+        }, 200);
       }
     }
 
-    function showResults() {
+    function launchDigitalNotebook() {
+      clearNotebookTimers();
       document.getElementById('step-quiz').classList.add('hidden');
+      document.getElementById('step-notebook').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      const n1 = document.getElementById('note-1');
+      const n2 = document.getElementById('note-2');
+      const n3 = document.getElementById('note-3');
+      const pBar = document.getElementById('notebook-progress');
+      const pText = document.getElementById('notebook-percent');
+      const sText = document.getElementById('notebook-status-text');
+      const stamp = document.getElementById('notebook-stamp');
+
+      // Reseteo de estados para animación limpia
+      n1.className = "p-3 bg-indigo-950/60 border-l-4 border-indigo-400 rounded-r-xl transition-all duration-500 opacity-0 transform translate-x-3";
+      n2.className = "p-3 bg-sky-950/60 border-l-4 border-sky-400 rounded-r-xl transition-all duration-500 opacity-0 transform translate-x-3";
+      n3.className = "p-3 bg-amber-950/60 border-l-4 border-amber-400 rounded-r-xl transition-all duration-500 opacity-0 transform translate-x-3";
+      stamp.classList.add('hidden');
+      pBar.style.width = '30%';
+      pText.innerText = '30%';
+      sText.innerText = 'Procesando respuestas del adolescente...';
+
+      notebookTimers.push(setTimeout(() => {
+        n1.classList.remove('opacity-0', 'translate-x-3');
+        pBar.style.width = '60%';
+        pText.innerText = '60%';
+        sText.innerText = 'Contrastando respuestas con baremos de riesgo...';
+      }, 700));
+
+      notebookTimers.push(setTimeout(() => {
+        n2.classList.remove('opacity-0', 'translate-x-3');
+        pBar.style.width = '85%';
+        pText.innerText = '85%';
+        sText.innerText = 'Generando índice pericial preliminar...';
+      }, 1600));
+
+      notebookTimers.push(setTimeout(() => {
+        n3.classList.remove('opacity-0', 'translate-x-3');
+        pBar.style.width = '100%';
+        pText.innerText = '100%';
+        sText.innerText = 'Blindaje analizado con éxito.';
+        stamp.classList.remove('hidden');
+      }, 2600));
+
+      notebookTimers.push(setTimeout(() => {
+        showFinalResultsNow();
+      }, 4200));
+    }
+
+    function showFinalResultsNow() {
+      clearNotebookTimers();
+      document.getElementById('step-quiz').classList.add('hidden');
+      document.getElementById('step-notebook').classList.add('hidden');
       document.getElementById('step-result').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
 
       const iconEl = document.getElementById('result-icon');
       const badgeEl = document.getElementById('result-score-badge');
