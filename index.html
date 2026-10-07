@@ -9,30 +9,41 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
-    .fade-enter { animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .fade-enter { animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px) scale(0.99); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     .emoji-pop {
       animation: popUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     }
     @keyframes popUp {
-      0% { opacity: 0; transform: scale(0.4) translateY(10px); }
-      50% { opacity: 1; transform: scale(1.3) translateY(-10px); }
+      0% { opacity: 0; transform: scale(0.3) translateY(10px); }
+      50% { opacity: 1; transform: scale(1.2) translateY(-10px); }
       100% { opacity: 0; transform: scale(1) translateY(-25px); }
+    }
+    /* Estilo para que los desplegables siempre sean clickeables y visibles */
+    select {
+      background-color: #020617 !important;
+      color: #f8fafc !important;
+      cursor: pointer;
+    }
+    select option {
+      background-color: #0f172a;
+      color: #f8fafc;
+      padding: 8px;
     }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-indigo-500 selection:text-white relative overflow-x-hidden">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-indigo-500 selection:text-white relative">
 
-  <!-- Feedback Flotante de Emoticonos -->
-  <div id="emoji-floater" class="fixed inset-0 pointer-events-none z-50 flex items-center justify-center hidden">
+  <!-- Feedback Flotante de Emoticonos (solo se activa cuando se responde una pregunta) -->
+  <div id="emoji-floater" style="display: none;" class="fixed inset-0 pointer-events-none z-50 flex items-center justify-center">
     <span id="emoji-char" class="text-7xl emoji-pop filter drop-shadow-lg"></span>
   </div>
 
   <!-- Barra Superior -->
-  <header class="w-full border-b border-slate-800/80 bg-slate-900/70 backdrop-blur-md sticky top-0 z-40">
+  <header class="w-full border-b border-slate-800/80 bg-slate-900/80 backdrop-blur-md sticky top-0 z-30">
     <div class="max-w-5xl mx-auto px-4 py-2.5 flex items-center justify-between">
       <div class="flex items-center gap-3">
         <img 
@@ -54,7 +65,7 @@
   </header>
 
   <!-- Contenedor Principal Dinámico -->
-  <main class="flex-grow flex items-center justify-center px-4 py-6 sm:py-10">
+  <main class="flex-grow flex items-center justify-center px-4 py-6 sm:py-10 relative z-10">
     <div class="w-full max-w-xl mx-auto">
       
       <!-- PANTALLA 1: Bienvenida y Selección con Desplegables -->
@@ -72,28 +83,30 @@
           <span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span> Triaje Técnico & Psicológico (12 Preguntas)
         </div>
 
-        <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-white mb-3 leading-tight">
+        <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-white mb-2 leading-tight">
           Nivel de <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-sky-400 to-emerald-400">Blindaje Digital</span>
         </h1>
         <p class="text-slate-400 text-xs sm:text-sm leading-relaxed mb-6 max-w-md mx-auto">
-          Basado en métricas y casuística de UNICEF, INCIBE y Save the Children ante la nueva normativa de protección de menores en el entorno digital.
+          Métricas y casuística de UNICEF, INCIBE y Save the Children ante la protección integral del menor en el entorno digital.
         </p>
 
-        <!-- Bloque de Selección de Perfil -->
+        <!-- Bloque de Perfiles -->
         <div class="space-y-4 text-left">
           
-          <!-- Opción 1: Menores con desplegable exacto de 12 a 17 -->
-          <div class="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-indigo-500 transition-all">
+          <!-- Opción 1: Menores (12 a 17 años) -->
+          <div class="p-4 rounded-2xl bg-slate-900/95 border border-slate-800 hover:border-indigo-500 transition-all">
             <div class="flex items-center gap-3 mb-3">
               <div class="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center text-xl">⚡</div>
               <div>
                 <h2 class="font-bold text-white text-sm sm:text-base">Adolescente (12 a 17 años)</h2>
-                <p class="text-xs text-slate-400">Privacidad, grupos de clase, retos, IA y bienestar digital.</p>
+                <p class="text-xs text-slate-400">Privacidad, grupos de clase, retos virales, IA y bienestar digital.</p>
               </div>
             </div>
-            <div class="flex gap-2 items-center">
-              <select id="age-menor" class="bg-slate-950 text-slate-200 border border-slate-700 text-xs rounded-xl px-3 py-2.5 focus:outline-none focus:border-indigo-500 w-1/2">
-                <option value="" disabled selected>Selecciona tu edad...</option>
+            
+            <label class="block text-[11px] font-semibold text-slate-300 mb-1.5">Selecciona tu edad:</label>
+            <div class="flex flex-col sm:flex-row gap-2">
+              <select id="age-menor" class="w-full sm:w-1/2 bg-slate-950 text-white border border-slate-700 text-sm rounded-xl px-3 py-2.5 focus:outline-none focus:border-indigo-500">
+                <option value="" disabled selected>-- Elige tu edad --</option>
                 <option value="12">12 años</option>
                 <option value="13">13 años</option>
                 <option value="14">14 años</option>
@@ -101,14 +114,14 @@
                 <option value="16">16 años</option>
                 <option value="17">17 años</option>
               </select>
-              <button onclick="checkAndStart('menor')" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs py-2.5 rounded-xl transition-all text-center">
+              <button onclick="checkAndStart('menor')" class="w-full sm:flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs sm:text-sm py-2.5 rounded-xl transition-all shadow-md active:scale-95">
                 Iniciar Test
               </button>
             </div>
           </div>
 
-          <!-- Opción 2: Familias con desplegable de tramo del hijo/a -->
-          <div class="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-sky-500 transition-all">
+          <!-- Opción 2: Familias -->
+          <div class="p-4 rounded-2xl bg-slate-900/95 border border-slate-800 hover:border-sky-500 transition-all">
             <div class="flex items-center gap-3 mb-3">
               <div class="w-10 h-10 rounded-xl bg-sky-500/10 flex items-center justify-center text-xl">👨‍👩‍👧</div>
               <div>
@@ -116,38 +129,42 @@
                 <p class="text-xs text-slate-400">Límites, mediación parental, compras in-app y protocolos de alarma.</p>
               </div>
             </div>
-            <div class="flex gap-2 items-center">
-              <select id="age-familia" class="bg-slate-950 text-slate-200 border border-slate-700 text-xs rounded-xl px-3 py-2.5 focus:outline-none focus:border-sky-500 w-1/2">
-                <option value="" disabled selected>Edad de su hijo/a...</option>
+            
+            <label class="block text-[11px] font-semibold text-slate-300 mb-1.5">Edad de su hijo/a principal:</label>
+            <div class="flex flex-col sm:flex-row gap-2">
+              <select id="age-familia" class="w-full sm:w-1/2 bg-slate-950 text-white border border-slate-700 text-sm rounded-xl px-3 py-2.5 focus:outline-none focus:border-sky-500">
+                <option value="" disabled selected>-- Elige tramo --</option>
                 <option value="menor-12">Menor de 12 años</option>
                 <option value="12-14">De 12 a 14 años (1º/2º ESO)</option>
                 <option value="15-17">De 15 a 17 años (3º/4º ESO - Bach/FP)</option>
-                <option value="varios">Varios hijos en diferentes tramos</option>
+                <option value="varios">Varios hijos en diferentes edades</option>
               </select>
-              <button onclick="checkAndStart('familia')" class="flex-1 bg-sky-600 hover:bg-sky-500 text-white font-semibold text-xs py-2.5 rounded-xl transition-all text-center">
+              <button onclick="checkAndStart('familia')" class="w-full sm:flex-1 bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs sm:text-sm py-2.5 rounded-xl transition-all shadow-md active:scale-95">
                 Iniciar Test
               </button>
             </div>
           </div>
 
           <!-- Opción 3: Docentes / Profesionales -->
-          <div class="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-emerald-500 transition-all">
+          <div class="p-4 rounded-2xl bg-slate-900/95 border border-slate-800 hover:border-emerald-500 transition-all">
             <div class="flex items-center gap-3 mb-3">
               <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-xl">🏫</div>
               <div>
                 <h2 class="font-bold text-white text-sm sm:text-base">Docente o Profesional de la Educación</h2>
-                <p class="text-xs text-slate-400">Responsabilidad civil in vigilando, ciberconvivencia escolar y LOPIVI.</p>
+                <p class="text-xs text-slate-400">Responsabilidad civil in vigilando, ciberconvivencia y LOPIVI.</p>
               </div>
             </div>
-            <div class="flex gap-2 items-center">
-              <select id="stage-docente" class="bg-slate-950 text-slate-200 border border-slate-700 text-xs rounded-xl px-3 py-2.5 focus:outline-none focus:border-emerald-500 w-1/2">
-                <option value="" disabled selected>Etapa educativa...</option>
+            
+            <label class="block text-[11px] font-semibold text-slate-300 mb-1.5">Etapa educativa del centro:</label>
+            <div class="flex flex-col sm:flex-row gap-2">
+              <select id="stage-docente" class="w-full sm:w-1/2 bg-slate-950 text-white border border-slate-700 text-sm rounded-xl px-3 py-2.5 focus:outline-none focus:border-emerald-500">
+                <option value="" disabled selected>-- Elige etapa --</option>
                 <option value="primaria">Primaria (hasta 12 años)</option>
                 <option value="eso">Secundaria Obligatoria (ESO)</option>
                 <option value="bach-fp">Bachillerato / Formación Profesional</option>
                 <option value="orientador">Gabinete de Orientación / Dirección</option>
               </select>
-              <button onclick="checkAndStart('docente')" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs py-2.5 rounded-xl transition-all text-center">
+              <button onclick="checkAndStart('docente')" class="w-full sm:flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm py-2.5 rounded-xl transition-all shadow-md active:scale-95">
                 Iniciar Test
               </button>
             </div>
@@ -169,13 +186,13 @@
         </div>
 
         <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-5 sm:p-7 shadow-xl fade-enter">
-          <span id="category-badge" class="inline-block text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-md bg-slate-800 text-slate-300 mb-3"></span>
+          <span id="category-badge" class="inline-block text-[10px] uppercase font-bold tracking-wider px-2.5 py-1 rounded-md bg-slate-800 text-indigo-300 border border-slate-700/60 mb-3"></span>
           <h2 id="question-text" class="text-base sm:text-lg font-bold text-white mb-5 leading-snug"></h2>
           <div id="answers-container" class="space-y-2.5"></div>
         </div>
       </section>
 
-      <!-- PANTALLA 3: Resultados y Captura de Expediente -->
+      <!-- PANTALLA 3: Resultados -->
       <section id="step-result" class="hidden fade-enter">
         <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 text-center shadow-xl">
           <div id="result-icon" class="w-16 h-16 mx-auto mb-3 rounded-2xl flex items-center justify-center text-3xl"></div>
@@ -208,6 +225,7 @@
     </div>
   </main>
 
+  <!-- Pie de Página -->
   <footer class="border-t border-slate-900 bg-slate-950 py-5 px-4 text-center">
     <p class="text-xs text-slate-400 font-semibold mb-1">Frente a Frente</p>
     <p class="text-[11px] text-slate-600 max-w-md mx-auto">
@@ -216,21 +234,20 @@
   </footer>
 
   <script>
-    // Banco oficial de 12 preguntas por tramo (Basado en UNICEF, INCIBE y Save the Children)
     const quizData = {
       menor: [
         {
           cat: "Privacidad & Contactos Desconocidos",
-          q: "1. ¿Te ha contactado algún perfil desconocido en Instagram, TikTok o Discord ofreciéndote regalos, monedas de juegos o pidiéndote guardar el secreto?",
+          q: "1. ¿Te ha contactado algún perfil desconocido en Instagram, TikTok o Discord ofreciéndote regalos, dinero en juegos o pidiéndote guardar el secreto?",
           a: [
             { text: "Nunca o los bloqueo al primer mensaje sospechoso.", points: 0, emoji: "🛡️" },
-            { text: "Me ha pasado alguna vez; no le contesté pero me dio desconfianza.", points: 2, emoji: "👀" },
-            { text: "He mantenido conversación o he compartido datos como mi zona o mi número.", points: 4, emoji: "⚠️" }
+            { text: "Me ha pasado alguna vez; no contesté pero me dio desconfianza.", points: 2, emoji: "👀" },
+            { text: "He mantenido conversación o he compartido datos personales.", points: 4, emoji: "⚠️" }
           ]
         },
         {
-          cat: "Presión de Grupo & Stickers",
-          q: "2. En grupos de clase o de amigos, ¿has visto compartir fotos de compañeros tomadas a escondidas, capturas íntimas o 'stickers' para burlarse de alguien?",
+          cat: "Presión de Grupo & Difusión",
+          q: "2. En grupos de clase o de amigos, ¿has visto compartir fotos tomadas a escondidas, capturas íntimas o 'stickers' para burlarse de alguien?",
           a: [
             { text: "No, en mis grupos no se consienten esas humillaciones.", points: 0, emoji: "👏" },
             { text: "Sí, las he visto pasar, aunque yo no suelo reenviarlas.", points: 2, emoji: "🤐" },
@@ -239,7 +256,7 @@
         },
         {
           cat: "Inteligencia Artificial & Deepfakes",
-          q: "3. ¿Conoces casos o te preocupa que usen fotos tuyas o de compañeros para desnudarlas o alterarlas con Inteligencia Artificial?",
+          q: "3. ¿Conoces casos o te preocupa que usen fotos tuyas o de compañeros para manipularlas o desnudarlas con Inteligencia Artificial?",
           a: [
             { text: "Tengo mis perfiles blindados y no subo fotos que puedan manipularse.", points: 0, emoji: "🔒" },
             { text: "Me da miedo que ocurra porque mis fotos circulan abiertamente.", points: 2, emoji: "😟" },
@@ -257,7 +274,7 @@
         },
         {
           cat: "FOMO & Notificaciones",
-          q: "5. Cuando no puedes mirar el móvil durante varias horas seguidas (clases o excursiones), ¿qué experimentas?",
+          q: "5. Cuando no puedes mirar el móvil durante varias horas seguidas (clases o actividades), ¿qué experimentas?",
           a: [
             { text: "Tranquilidad total, disfruto de lo que estoy haciendo.", points: 0, emoji: "🧘" },
             { text: "Inquietud moderada o curiosidad por revisar qué mensajes tengo.", points: 2, emoji: "⏳" },
@@ -266,7 +283,7 @@
         },
         {
           cat: "Sexting & Presiones",
-          q: "6. Según estadísticas, al 9% de los adolescentes en España les han pedido fotos privadas. ¿Alguna vez alguien ha insistido en que le mandes fotos íntimas?",
+          q: "6. Según estadísticas oficiales, a 1 de cada 10 menores les piden fotos íntimas. ¿Alguna vez alguien ha insistido en que le mandes fotos privadas?",
           a: [
             { text: "Nunca me lo han pedido o me he negado tajantemente.", points: 0, emoji: "🚫" },
             { text: "Me han presionado sutilmente con la excusa de la confianza.", points: 2, emoji: "😬" },
@@ -279,7 +296,7 @@
           a: [
             { text: "No, nadie invade mi intimidad ni controla a quién sigo.", points: 0, emoji: "🤝" },
             { text: "Alguna vez me han hecho comentarios celosos por contestar tarde.", points: 2, emoji: "🧐" },
-            { text: "Tienen mis contraseñas o me exigen videollamada para demostrar dónde estoy.", points: 4, emoji: "⚠️" }
+            { text: "Tienen mis contraseñas o me exigen pruebas de dónde estoy.", points: 4, emoji: "⚠️" }
           ]
         },
         {
@@ -288,12 +305,12 @@
           a: [
             { text: "Me da igual la cantidad de likes o no utilizo filtros corporales.", points: 0, emoji: "😎" },
             { text: "A veces borro fotos si no llegan a la interacción esperada.", points: 2, emoji: "💔" },
-            { text: "Me genera un malestar grave compararme con los cuerpos y vidas de las redes.", points: 3, emoji: "🥀" }
+            { text: "Me genera malestar grave compararme con los cuerpos y vidas de las redes.", points: 3, emoji: "🥀" }
           ]
         },
         {
-          cat: "Contenidos Inadecuados Involuntarios",
-          q: "9. ¿Te has topado de forma repentina en tu feed con vídeos de peleas violentas, retos peligrosos o pornografía explícita?",
+          cat: "Contenidos Violentos o Explícitos",
+          q: "9. ¿Te has topado de forma repentina en tu feed con vídeos de peleas violentas, retos lesivos o pornografía?",
           a: [
             { text: "Rara vez o los denuncio y bloqueo el contenido inmediatamente.", points: 0, emoji: "🧹" },
             { text: "Aparecen con cierta frecuencia en los algoritmos.", points: 2, emoji: "⚠️" },
@@ -301,40 +318,220 @@
           ]
         },
         {
-          cat: "Juegos Online & Micropagos",
-          q: "10. En juegos tipo Fortnite, Roblox, Brawl Stars o sobres de cartas, ¿has sentido el impulso incontrolable de gastar dinero real para ganar o mejorar?",
+          cat: "Juegos Online & Cajas de Botín",
+          q: "10. En juegos online, ¿has sentido el impulso incontrolable de gastar dinero para mejorar personajes o ganar partidas?",
           a: [
             { text: "Juego por diversión sin gastar ni obsesionarme.", points: 0, emoji: "🎮" },
-            { text: "A veces he gastado dinero de la paga o me da rabia perder.", points: 2, emoji: "🪙" },
-            { text: "He cogido tarjetas bancarias sin permiso o me paso horas pensando en cajas de botín.", points: 4, emoji: "🎰" }
+            { text: "A veces he gastado dinero de la paga o me frustro mucho si pierdo.", points: 2, emoji: "🪙" },
+            { text: "He usado tarjetas sin permiso o paso horas pensando en compras del juego.", points: 4, emoji: "🎰" }
           ]
         },
         {
           cat: "Identidad & Huella Digital",
-          q: "11. ¿Tienes tus perfiles en 'Modo Público' con tu nombre real, colegio o lugares por los que sales frecuentemente?",
+          q: "11. ¿Tienes tus perfiles en 'Modo Público' mostrando tu nombre real, instituto o lugares que frecuentas?",
           a: [
-            { text: "Mis cuentas son totalmente privadas y solo admito a amigos reales.", points: 0, emoji: "🔐" },
+            { text: "Mis cuentas son privadas y solo admito a amistades reales.", points: 0, emoji: "🔐" },
             { text: "Tengo alguna cuenta abierta pero no pongo datos muy concretos.", points: 2, emoji: "🌍" },
-            { text: "Público al 100%, con ubicación etiquetada y miles de desconocidos.", points: 3, emoji: "📢" }
+            { text: "Público al 100%, con ubicación y muchos desconocidos agregados.", points: 3, emoji: "📢" }
           ]
         },
         {
-          cat: "Canal de Confianza",
+          cat: "Canal de Ayuda y Confianza",
           q: "12. Si hoy tuvieras un problema grave en redes (chantaje, acoso o filtración), ¿acudirías con confianza a tus padres o profesores?",
           a: [
             { text: "Sí, sin dudarlo; sé que me ayudarían sin castigarme.", points: 0, emoji: "❤️" },
             { text: "Tendría mucho miedo de que me quiten el teléfono o se enfaden.", points: 2, emoji: "🤐" },
-            { text: "Jamás se lo contaría; intentaría resolverlo solo/a o pagando.", points: 4, emoji: "🚨" }
+            { text: "Jamás se lo contaría; intentaría resolverlo a solas.", points: 4, emoji: "🚨" }
           ]
         }
       ],
       familia: [
-        { cat: "Normativa en el Hogar", q: "1. ¿Tienen pactadas normas concretas y consensuadas sobre horarios de desconexión nocturna de pantallas?", a: [{ text: "Sí, no duermen con dispositivos en el dormitorio.", points: 0 }, { text: "Hay normas pero cuesta mucho que se cumplan.", points: 2 }, { text: "Es una fuente constante de peleas o no hay límites.", points: 4 }] },
-        { cat: "Supervisión vs Invasión", q: "2. ¿Conoce los nombres de usuario y los círculos de amistades con los que interactúa su hijo/a en redes y juegos?", a: [{ text: "Mantenemos un canal de diálogo abierto y transparente.", points: 0 }, { text: "Conozco las plataformas principales pero ignoro sus chats privados.", points: 2 }, { text: "Hermetismo absoluto por parte del menor.", points: 3 }] },
-        { cat: "Riesgos de Sexting y Grooming", q: "3. ¿Han hablado abiertamente en casa sobre el riesgo de manipulación de fotos privadas o contacto con adultos camuflados?", a: [{ text: "Sí, con lenguaje claro, educativo y sin tabúes.", points: 0 }, { text: "Puntualmente tras ver alguna noticia en televisión.", points: 2 }, { text: "Nunca; no hemos sabido cómo abordar el tema.", points: 3 }] },
-        { cat: "Respuesta ante el Acoso", q: "4. ¿Sabría qué medidas jurídicas y técnicas inmediatas tomar si su hijo/a sufre ciberacoso escolar a través de WhatsApp?", a: [{ text: "Sé cómo levantar acta de las pruebas y activar el protocolo oficial.", points: 0 }, { text: "Tendría dudas sobre si borrar el chat o a quién recurrir.", points: 2 }, { text: "Desconozco completamente los protocolos legales de protección.", points: 3 }] },
-        { cat: "Canal Prioritario AEPD", q: "5. ¿Conoce la existencia del Canal Prioritario de la Agencia Española de Protección de Datos para retirar vídeos y fotos en horas?", a: [{ text: "Sí, sé cómo tramitar la retirada urgente de contenidos ilícitos.", points: 0 }, { text: "He oído hablar de ello pero no sabría cómo utilizarlo.", points: 2 }, { text: "No conocía este recurso gratuito y legal.", points: 3 }] },
-        { cat: "Gasto y Juegos de Azar", q: "6. ¿Tiene su hijo/a acceso libre a tarjetas o métodos de pago en plataformas como App Store, Google Play o PlayStation?", a: [{ text: "Totalmente bloqueado con contraseñas de compra familiar.", points: 0 }, { text: "Autorizo compras puntuales pero a veces hay descuidos.", points: 2 }, { text: "Tiene métodos vinculados sin supervisión de gasto.", points: 4 }] },
-        { cat: "Salud Mental y Autoestima", q: "7. ¿Ha detectado cambios bruscos de humor, irritabilidad o bajada en el rendimiento académico asociados al uso del móvil?", a: [{ text: "Mantiene un equilibrio saludable en sus rutinas y descanso.", points: 0 }, { text: "Ocasionalmente se muestra irritable al pedirle que lo deje.", points: 2 }, { text: "Cambios severos de carácter, desgana y aislamiento social.", points: 4 }] },
-        { cat: "Ejemplo Parental", q: "8. Durante comidas familiares o conversaciones personales, ¿los adultos del hogar evitan el uso continuo de teléfonos móviles?", a: [{ text: "Las comidas y espacios comunes son zonas libres de pantallas.", points: 0 }, { text: "A menudo atendemos mensajes de trabajo o notificaciones.", points: 2 }, { text: "El uso de pantallas es constante por ambas partes.", points: 3 }] },
-        { cat: "Inteligencia Artificial y Manipulación", q: "9. ¿Ha conversado con el menor sobre los riesgos de compartir fotos personales en aplicaciones de reto
+        { cat: "Normativa en el Hogar", q: "1. ¿Tienen pactadas normas concretas sobre horarios de desconexión nocturna de pantallas?", a: [{ text: "Sí, no duermen con dispositivos en el dormitorio.", points: 0 }, { text: "Hay normas pero cuesta mucho que se cumplan.", points: 2 }, { text: "Es una fuente constante de discusiones o no hay límites.", points: 4 }] },
+        { cat: "Supervisión vs Invasión", q: "2. ¿Conoce los círculos y plataformas con los que interactúa su hijo/a en redes y juegos?", a: [{ text: "Mantenemos un canal de diálogo abierto y de confianza.", points: 0 }, { text: "Conozco las aplicaciones principales pero no sus chats privados.", points: 2 }, { text: "Hermetismo absoluto por parte del menor.", points: 3 }] },
+        { cat: "Riesgos de Sexting y Grooming", q: "3. ¿Han hablado abiertamente en casa sobre el riesgo de manipulación de fotos privadas o perfiles falsos?", a: [{ text: "Sí, con lenguaje claro, educativo y sin tabúes.", points: 0 }, { text: "Puntualmente tras ver alguna noticia en medios.", points: 2 }, { text: "Nunca; no hemos sabido cómo abordar el tema.", points: 3 }] },
+        { cat: "Respuesta ante el Acoso", q: "4. ¿Sabría qué medidas jurídicas y técnicas inmediatas tomar si su hijo/a sufre ciberacoso escolar?", a: [{ text: "Sé cómo levantar acta de las pruebas y activar el protocolo oficial.", points: 0 }, { text: "Tendría dudas sobre si borrar el chat o a quién recurrir.", points: 2 }, { text: "Desconozco completamente los protocolos legales de protección.", points: 3 }] },
+        { cat: "Canal Prioritario AEPD", q: "5. ¿Conoce la existencia del Canal Prioritario de la AEPD para retirar vídeos y fotos ilícitas con urgencia?", a: [{ text: "Sí, conozco cómo tramitar la retirada urgente de contenidos.", points: 0 }, { text: "He oído hablar de ello pero no sabría cómo utilizarlo.", points: 2 }, { text: "No conocía este recurso legal y gratuito.", points: 3 }] },
+        { cat: "Gasto y Juegos de Azar", q: "6. ¿Tiene su hijo/a acceso libre a tarjetas o métodos de pago en plataformas de juegos o apps?", a: [{ text: "Totalmente bloqueado con contraseñas de compra familiar.", points: 0 }, { text: "Autorizo compras puntuales pero a veces hay descuidos.", points: 2 }, { text: "Tiene métodos vinculados sin supervisión de gasto.", points: 4 }] },
+        { cat: "Salud Mental y Autoestima", q: "7. ¿Ha detectado cambios bruscos de humor, desgana o bajada académica asociados al uso del móvil?", a: [{ text: "Mantiene un equilibrio saludable en sus rutinas y descanso.", points: 0 }, { text: "Ocasionalmente se muestra irritable al pedirle que lo deje.", points: 2 }, { text: "Cambios severos de carácter, desgana y aislamiento social.", points: 4 }] },
+        { cat: "Ejemplo Parental", q: "8. Durante comidas familiares o conversaciones personales, ¿los adultos del hogar evitan el uso continuo de móviles?", a: [{ text: "Las comidas y espacios comunes son zonas libres de pantallas.", points: 0 }, { text: "A menudo atendemos mensajes de trabajo o notificaciones.", points: 2 }, { text: "El uso de pantallas es constante por ambas partes.", points: 3 }] },
+        { cat: "Inteligencia Artificial y Manipulación", q: "9. ¿Ha conversado con el menor sobre los riesgos de subir fotos a apps de retoque con IA generativa?", a: [{ text: "Sí, conoce que cede su identidad biométrica.", points: 0 }, { text: "Poco; desconocemos qué términos de uso aceptan esas apps.", points: 2 }, { text: "No consideramos que suponga un riesgo relevante.", points: 3 }] },
+        { cat: "Exposición de Imagen (Sharenting)", q: "10. Como progenitores, ¿publican ustedes fotos de sus hijos en redes sociales abiertas sin su consentimiento?", a: [{ text: "Jamás publicamos imágenes de su rostro en perfiles abiertos.", points: 0 }, { text: "Ocasionalmente en cuentas con privacidad restringida.", points: 2 }, { text: "Compartimos con asiduidad actividades familiares sin tapar su rostro.", points: 3 }] },
+        { cat: "Control y Violencia Digital", q: "11. En caso de tener pareja, ¿ha detectado conductas de exigencia de contraseñas o control mutuo de conexiones?", a: [{ text: "Existen pautas de respeto e intimidad afectiva claras.", points: 0 }, { text: "He observado cierta insistencia en responder al instante.", points: 2 }, { text: "Normalizan revisar el teléfono del otro o imponer con quién hablar.", points: 4 }] },
+        { cat: "Contrato de Convivencia Familiar", q: "12. ¿Disponen en casa de un acuerdo escrito o pacto formalizado de uso responsable de la tecnología?", a: [{ text: "Sí, tenemos un pacto digital familiar formalizado.", points: 0 }, { text: "Tenemos acuerdos verbales informales.", points: 2 }, { text: "No existe ningún marco de acuerdo establecido.", points: 3 }] }
+      ],
+      docente: [
+        { cat: "Protocolo Específico Digital", q: "1. ¿Dispone el centro de un protocolo específico de actuación ante ciberbullying, sexting y deepfakes?", a: [{ text: "Sí, actualizado, conocido por el claustro y con figuras de mediación.", points: 0 }, { text: "Tenemos pautas generales de acoso, pero no específicas digitales.", points: 2 }, { text: "No existe un protocolo técnico-jurídico articulado.", points: 4 }] },
+        { cat: "Responsabilidad Civil In Vigilando", q: "2. ¿Es consciente el claustro de las responsabilidades civiles del centro por incidentes en grupos escolares?", a: [{ text: "Conocemos el marco legal de la LOPIVI y jurisprudencia reciente.", points: 0 }, { text: "Tenemos nociones básicas pero no asesoramiento jurídico continuo.", points: 2 }, { text: "Se asume erróneamente que lo que ocurre online no es competencia del centro.", points: 4 }] },
+        { cat: "Preservación de Evidencias Digitales", q: "3. Ante un conflicto en un grupo de alumnos, ¿sabe el profesorado cómo preservar las pruebas válidamente?", a: [{ text: "Conocemos cómo conservar metadatos y asegurar la cadena de custodia.", points: 0 }, { text: "Solemos limitarnos a hacer capturas de pantalla sencillas.", points: 2 }, { text: "Desconocemos los requisitos para que una prueba sea válida en fiscalía.", points: 3 }] },
+        { cat: "Dispositivos en Horario Lectivo", q: "4. ¿Cuál es la política del centro respecto a la presencia de teléfonos personales en aulas y recreos?", a: [{ text: "Prohibición o custodia eficaz salvo uso estrictamente pedagógico.", points: 0 }, { text: "Regulación permisiva o con dificultades notables de cumplimiento.", points: 2 }, { text: "Uso indiscriminado sin supervisión en patios y descansos.", points: 3 }] },
+        { cat: "Deepfakes y Nuevas Tecnologías", q: "5. ¿Han detectado casos de manipulación de imágenes de alumnado o profesorado con Inteligencia Artificial?", a: [{ text: "No, o se ha actuado de inmediato con medidas disciplinarias y legales.", points: 0 }, { text: "Han surgido rumores o indicios sin esclarecer formalmente.", points: 2 }, { text: "Es un problema creciente y no sabemos cómo frenarlo.", points: 4 }] },
+        { cat: "Formación del Claustro", q: "6. ¿Ha recibido el equipo docente formación acreditada en seguridad digital y mediación durante el último curso?", a: [{ text: "Sí, formación continua y especializada en bienestar digital.", points: 0 }, { text: "Charlas puntuales pero de enfoque muy superficial.", points: 2 }, { text: "Ninguna formación específica en la materia.", points: 3 }] },
+        { cat: "Coordinador de Bienestar (LOPIVI)", q: "7. ¿La figura del Coordinador de Bienestar y Protección cuenta con horas lectivas reales y recursos para actuar?", a: [{ text: "Completamente dotada y con plan preventivo en marcha.", points: 0 }, { text: "Es una figura testimonial sin suficiente tiempo ni recursos.", points: 2 }, { text: "No está operativa ni cumple sus funciones específicas.", points: 4 }] },
+        { cat: "Cohesión con las Familias", q: "8. ¿Existe un canal directo y ágil de colaboración con las familias ante alertas tempranas de conflicto digital?", a: [{ text: "Canal bidireccional fluido con protocolos de reunión urgente.", points: 0 }, { text: "Se contacta solo cuando el conflicto ya es grave e incontrolable.", points: 2 }, { text: "Falta de coordinación sistemática entre hogar y colegio.", points: 3 }] },
+        { cat: "Alfabetización Digital Crítica", q: "9. ¿Se enseña activamente al alumnado a contrastar contenidos falsos, detectar estafas y proteger su privacidad?", a: [{ text: "Forma parte del currículo transversal de competencias clave.", points: 0 }, { text: "Se menciona únicamente en asignaturas optativas de informática.", points: 2 }, { text: "No se trabaja en el aula de forma planificada.", points: 3 }] },
+        { cat: "Grupos de Mensajería Paralelos", q: "10. ¿Tiene constancia el centro de la proliferación de canales o chats anónimos dedicados a difundir rumores?", a: [{ text: "Contamos con observadores y alertas tempranas del propio alumnado.", points: 0 }, { text: "Llegan avisos esporádicos pero es difícil intervenir.", points: 2 }, { text: "Generan continuas agresiones sin capacidad de respuesta del centro.", points: 4 }] },
+        { cat: "Intervención con el Menor Infractor", q: "11. En casos de conflicto digital, ¿se aplican medidas restaurativas y de reeducación con el agresor?", a: [{ text: "Sí, enfoque restaurativo de reparación del daño y mediación.", points: 0 }, { text: "Únicamente sanciones punitivas como expulsión temporal.", points: 2 }, { text: "Sin medidas eficaces para prevenir la reincidencia.", points: 3 }] },
+        { cat: "Asesoramiento Legal Externo", q: "12. ¿Dispone el centro o el claustro de un servicio de consulta legal y psicológica especializado para resolver dudas críticas en 24h?", a: [{ text: "Sí, contamos con asesoría legal y psicológica de referencia.", points: 0 }, { text: "Dependemos exclusivamente de la inspección educativa ordinaria.", points: 2 }, { text: "Desprotección total ante situaciones complejas o denuncias.", points: 4 }] }
+      ]
+    };
+
+    let currentProfile = '';
+    let currentDetail = '';
+    let currentQuestionIdx = 0;
+    let totalScore = 0;
+    let answersLog = [];
+
+    function checkAndStart(profile) {
+      if (profile === 'menor') {
+        const sel = document.getElementById('age-menor');
+        const val = sel ? sel.value : '';
+        if (!val) { alert("Por favor, selecciona tu edad en el desplegable para personalizar tu test."); return; }
+        currentDetail = `${val} años`;
+      } else if (profile === 'familia') {
+        const sel = document.getElementById('age-familia');
+        const val = sel ? sel.value : '';
+        if (!val) { alert("Por favor, selecciona el tramo de edad de su hijo/a en el desplegable."); return; }
+        currentDetail = val;
+      } else if (profile === 'docente') {
+        const sel = document.getElementById('stage-docente');
+        const val = sel ? sel.value : '';
+        if (!val) { alert("Por favor, selecciona la etapa educativa de su centro."); return; }
+        currentDetail = val;
+      }
+
+      currentProfile = profile;
+      currentQuestionIdx = 0;
+      totalScore = 0;
+      answersLog = [];
+
+      document.getElementById('step-intro').classList.add('hidden');
+      document.getElementById('step-quiz').classList.remove('hidden');
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      const questions = quizData[currentProfile];
+      const q = questions[currentQuestionIdx];
+      
+      document.getElementById('quiz-badge').innerText = `Pregunta ${currentQuestionIdx + 1} de ${questions.length}`;
+      const percent = Math.round(((currentQuestionIdx + 1) / questions.length) * 100);
+      document.getElementById('quiz-percent').innerText = `${percent}%`;
+      document.getElementById('progress-bar').style.width = `${percent}%`;
+
+      document.getElementById('category-badge').innerText = q.cat;
+      document.getElementById('question-text').innerText = q.q;
+      const container = document.getElementById('answers-container');
+      container.innerHTML = '';
+
+      q.a.forEach((opt) => {
+        const btn = document.createElement('button');
+        btn.className = "w-full p-3.5 sm:p-4 rounded-xl bg-slate-950/80 border border-slate-800 hover:border-indigo-400 active:scale-[0.99] text-left text-xs sm:text-sm text-slate-200 hover:text-white transition-all flex items-center justify-between";
+        btn.innerHTML = `<span>${opt.text}</span><span class="text-slate-600 ml-2">→</span>`;
+        btn.onclick = () => selectOption(opt.points, opt.text, opt.emoji);
+        container.appendChild(btn);
+      });
+    }
+
+    function triggerEmoji(emojiChar) {
+      if (!emojiChar) return;
+      const floater = document.getElementById('emoji-floater');
+      const charEl = document.getElementById('emoji-char');
+      charEl.innerText = emojiChar;
+      floater.style.display = 'flex';
+      setTimeout(() => {
+        floater.style.display = 'none';
+      }, 550);
+    }
+
+    function selectOption(points, answerText, emoji) {
+      totalScore += points;
+      answersLog.push({ 
+        categoria: quizData[currentProfile][currentQuestionIdx].cat,
+        pregunta: quizData[currentProfile][currentQuestionIdx].q, 
+        respuesta: answerText 
+      });
+
+      if (currentProfile === 'menor' && emoji) {
+        triggerEmoji(emoji);
+      }
+
+      currentQuestionIdx++;
+      if (currentQuestionIdx < quizData[currentProfile].length) {
+        renderQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+    function showResults() {
+      document.getElementById('step-quiz').classList.add('hidden');
+      document.getElementById('step-result').classList.remove('hidden');
+
+      const iconEl = document.getElementById('result-icon');
+      const badgeEl = document.getElementById('result-score-badge');
+      const titleEl = document.getElementById('result-title');
+      const descEl = document.getElementById('result-desc');
+      const pointsEl = document.getElementById('result-points');
+
+      const maxPossibleScore = 48;
+
+      if (totalScore >= 18) {
+        iconEl.className = "w-16 h-16 mx-auto mb-3 rounded-2xl flex items-center justify-center text-3xl bg-rose-500/10 text-rose-400 border border-rose-500/20";
+        iconEl.innerText = "🚨";
+        badgeEl.className = "text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-2 inline-block bg-rose-500/20 text-rose-300 border border-rose-500/30";
+        badgeEl.innerText = `Nivel Crítico de Vulnerabilidad (${totalScore}/${maxPossibleScore} pts)`;
+        titleEl.innerText = "Intervención y Blindaje Urgente";
+        descEl.innerText = "Los indicadores reflejan situaciones activas de riesgo legal, sobrecarga emocional o desprotección en el entorno digital que precisan contención profesional.";
+        pointsEl.innerHTML = `
+          <li>• <strong>Riesgo Legal / Penal:</strong> Evidencia de conductas susceptibles de infracción de la intimidad, grooming o responsabilidad civil.</li>
+          <li>• <strong>Indicador Psicológico:</strong> Patrones severos de dependencia digital, ansiedad de conexión o normalización de agresiones.</li>
+          <li>• <strong>Medida Inmediata:</strong> Activación de protocolos de aseguramiento de pruebas y formalización de pactos vinculantes.</li>
+        `;
+      } else if (totalScore >= 9) {
+        iconEl.className = "w-16 h-16 mx-auto mb-3 rounded-2xl flex items-center justify-center text-3xl bg-amber-500/10 text-amber-400 border border-amber-500/20";
+        iconEl.innerText = "⚠️";
+        badgeEl.className = "text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-2 inline-block bg-amber-500/20 text-amber-300 border border-amber-500/30";
+        badgeEl.innerText = `Nivel Intermedio de Exposición (${totalScore}/${maxPossibleScore} pts)`;
+        titleEl.innerText = "Medidas Preventivas Requeridas";
+        descEl.innerText = "Se aprecian zonas grises: hábitos de riesgo y falta de protocolos claros que pueden derivar en conflictos si no se corrigen a tiempo.";
+        pointsEl.innerHTML = `
+          <li>• <strong>Zonas de Fuga:</strong> Exposición innecesaria en redes y canales de mensajería sin supervisión activa.</li>
+          <li>• <strong>Convivencia:</strong> Discusiones recurrentes o falta de acuerdos documentados entre las partes.</li>
+          <li>• <strong>Recomendación:</strong> Establecer un Pacto Digital formal y revisar la configuración de privacidad en cada app.</li>
+        `;
+      } else {
+        iconEl.className = "w-16 h-16 mx-auto mb-3 rounded-2xl flex items-center justify-center text-3xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20";
+        iconEl.innerText = "🛡️";
+        badgeEl.className = "text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-2 inline-block bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";
+        badgeEl.innerText = `Blindaje Robusto y Saludable (${totalScore}/${maxPossibleScore} pts)`;
+        titleEl.innerText = "Pautas de Convivencia Ejemplares";
+        descEl.innerText = "Presenta un excelente grado de madurez digital, con límites definidos y criterio defensivo ante riesgos en la red.";
+        pointsEl.innerHTML = `
+          <li>• <strong>Autonomía Crítica:</strong> Capacidad probada para rechazar manipulaciones o contactos no autorizados.</li>
+          <li>• <strong>Pauta de Mantenimiento:</strong> Mantener actualizados los conocimientos ante nuevas herramientas de IA y apps emergentes.</li>
+        `;
+      }
+    }
+
+    function submitResults(e) {
+      e.preventDefault();
+      const email = document.getElementById('user-email').value;
+      
+      const payload = {
+        marca: "Frente a Frente",
+        perfil: currentProfile,
+        detalle_perfil: currentDetail,
+        puntuacion: totalScore,
+        email: email,
+        respuestas: answersLog,
+        timestamp: new Date().toISOString()
+      };
+      
+      console.log("Expediente preliminar registrado:", payload);
+
+      document.getElementById('contact-form').classList.add('hidden');
+      document.getElementById('success-msg').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
