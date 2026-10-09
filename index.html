@@ -82,14 +82,14 @@
       
       <!-- PANTALLA 1: Portada y Selección Inmediata -->
       <section id="step-intro" class="fade-enter text-center">
-        <!-- LOGO CENTRAL DESTACADO -->
+        <!-- LOGO CENTRAL EXTRA GRANDE Y LEGIBLE -->
         <div class="flex justify-center mb-6">
           <div class="relative group">
-            <div class="absolute -inset-1 bg-gradient-to-r from-indigo-500 via-sky-500 to-emerald-500 rounded-3xl blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
+            <div class="absolute -inset-1.5 bg-gradient-to-r from-indigo-500 via-sky-500 to-emerald-500 rounded-3xl blur-md opacity-35 group-hover:opacity-65 transition duration-500"></div>
             <img 
               src="photo.jpg" 
               alt="Logo Frente a Frente" 
-              class="relative h-36 w-36 sm:h-44 sm:w-44 md:h-48 md:w-48 object-cover rounded-3xl shadow-2xl border-2 border-indigo-500/40"
+              class="relative w-56 h-56 sm:w-68 sm:h-68 md:w-76 md:h-76 object-contain bg-slate-950/80 rounded-3xl shadow-2xl border-2 border-indigo-500/50 p-2"
               onerror="this.style.display='none'"
             >
           </div>
@@ -187,7 +187,7 @@
         </div>
       </section>
 
-      <!-- PANTALLA INTERMEDIA: REPRODUCTOR DE VÍDEO ANIMADO CON VELOCIDAD LENTA Y PAUSADA -->
+      <!-- PANTALLA INTERMEDIA: REPRODUCTOR DE VÍDEO ANIMADO -->
       <section id="step-video" class="hidden fade-enter">
         <div class="bg-slate-900/95 border-2 border-indigo-500/40 rounded-3xl p-5 sm:p-7 shadow-2xl relative overflow-hidden backdrop-blur-md">
           
@@ -201,7 +201,7 @@
 
           <p id="video-description" class="text-xs text-slate-300 mb-3 leading-relaxed"></p>
 
-          <!-- ESCENARIO DEL VÍDEO (RITMO CALMADO: 6 SEGUNDOS POR ESCENA) -->
+          <!-- ESCENARIO DEL VÍDEO -->
           <div class="relative rounded-2xl overflow-hidden border border-slate-800 shadow-2xl mb-3">
             <div id="player-screen" class="screen-stage w-full flex flex-col items-center justify-center p-6 sm:p-8 text-center relative select-none">
               
@@ -215,7 +215,7 @@
                 Iniciando cápsula...
               </h4>
               
-              <!-- Subtítulo explicativo legible y destacado -->
+              <!-- Subtítulo explicativo -->
               <p id="anim-frame-sub" class="text-xs sm:text-sm text-indigo-200 max-w-md mx-auto leading-relaxed transition-opacity duration-500 font-medium">
                 Cargando recomendaciones oficiales de la Agencia de Protección de Datos...
               </p>
@@ -240,7 +240,7 @@
             </div>
           </div>
 
-          <!-- Botón para avanzar cuando se haya terminado de leer -->
+          <!-- Botón para avanzar -->
           <button type="button" onclick="showFinalResultsNow()" class="w-full bg-gradient-to-r from-indigo-600 via-sky-600 to-indigo-600 hover:opacity-90 text-white font-bold text-xs sm:text-sm py-3 rounded-xl transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2">
             <span>Continuar a mi Dictamen de Blindaje</span> <span>→</span>
           </button>
@@ -293,7 +293,6 @@
   </footer>
 
   <script>
-    // SECUENCIAS DEL VÍDEO CON RITMO LENTO (24 SEGUNDOS TOTALES - 6s POR ESCENA)
     const videoStories = {
       menor: {
         title: "Tips de Seguridad: Canal Prioritario y Privacidad",
@@ -388,7 +387,6 @@
     let answersLog = [];
     let isAnswering = false;
 
-    // Control del Reproductor
     let videoTimerInterval = null;
     let currentVideoSec = 0;
     let isVideoPlaying = false;
@@ -476,7 +474,6 @@
       }
     }
 
-    // MOTOR DEL VÍDEO CON INTERVALO DE UN SEGUNDO (24s)
     function launchVideoStage() {
       document.getElementById('step-quiz').classList.add('hidden');
       document.getElementById('step-video').classList.remove('hidden');
