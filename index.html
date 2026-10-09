@@ -26,11 +26,10 @@
       50% { opacity: 1; transform: scale(1.2) translateY(-10px); }
       100% { opacity: 0; transform: scale(1) translateY(-25px); }
     }
-    @keyframes pulseCard {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.015); }
+    .screen-stage {
+      aspect-ratio: 16 / 9;
+      background: radial-gradient(circle at center, #1e1b4b 0%, #09090b 100%);
     }
-    .pulse-anim { animation: pulseCard 3s infinite ease-in-out; }
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-indigo-500 selection:text-white relative">
@@ -183,32 +182,57 @@
         </div>
       </section>
 
-      <!-- PANTALLA INTERMEDIA: CÁPSULA FORMATIVA CON TIPS Y MEDIDAS OFICIALES -->
+      <!-- PANTALLA INTERMEDIA: REPRODUCTOR DE VÍDEO ANIMADO INTEGRADO -->
       <section id="step-video" class="hidden fade-enter">
         <div class="bg-slate-900/95 border-2 border-indigo-500/40 rounded-3xl p-5 sm:p-7 shadow-2xl relative overflow-hidden backdrop-blur-md">
           
           <div class="flex items-center justify-between mb-3">
             <div>
-              <span id="video-tag" class="text-[10px] uppercase tracking-wider font-bold px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">CÁPSULA OFICIAL AEPD</span>
+              <span id="video-tag" class="text-[10px] uppercase tracking-wider font-bold px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">CÁPSULA AUDIOVISUAL</span>
               <h3 id="video-title" class="text-base sm:text-lg font-extrabold text-white mt-1"></h3>
             </div>
             <span class="text-2xl" id="video-icon">🛡️</span>
           </div>
 
-          <p id="video-description" class="text-xs text-slate-300 mb-4 leading-relaxed"></p>
+          <p id="video-description" class="text-xs text-slate-300 mb-3 leading-relaxed"></p>
 
-          <!-- Tarjeta Animada con Tips Visuales e Ilustrados -->
-          <div id="video-card-container" class="rounded-2xl border border-slate-800 p-4 sm:p-5 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 mb-5 pulse-anim shadow-inner">
-            <div id="video-tips-content" class="space-y-3">
-              <!-- Inyección de pautas dinámicas según el perfil -->
+          <!-- ESCENARIO DEL VÍDEO CON ANIMACIONES VECTORIALES NATIVAS -->
+          <div class="relative rounded-2xl overflow-hidden border border-slate-800 shadow-2xl mb-3">
+            <div id="player-screen" class="screen-stage w-full flex flex-col items-center justify-center p-6 text-center relative select-none">
+              
+              <!-- Dibujo central animado -->
+              <div id="anim-frame-icon" class="text-6xl sm:text-7xl mb-3 transition-transform duration-500 transform hover:scale-110">
+                🛡️
+              </div>
+              
+              <!-- Título de la escena -->
+              <h4 id="anim-frame-title" class="text-sm sm:text-base font-bold text-white mb-1 transition-opacity duration-300">
+                Iniciando cápsula...
+              </h4>
+              
+              <!-- Subtítulo explicativo -->
+              <p id="anim-frame-sub" class="text-[11px] sm:text-xs text-indigo-200 max-w-sm mx-auto leading-relaxed transition-opacity duration-300">
+                Cargando recomendaciones oficiales de la Agencia de Protección de Datos...
+              </p>
+
+              <!-- Indicador de reproducción -->
+              <div class="absolute top-3 right-3 text-[10px] font-mono bg-black/40 text-slate-400 px-2 py-0.5 rounded">
+                REC ● <span id="video-timer">00:00</span>
+              </div>
             </div>
-          </div>
 
-          <!-- Enlace oficial directo verificado -->
-          <div class="text-center mb-4">
-            <a id="video-ext-link" href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs text-indigo-400 hover:text-indigo-300 underline font-medium">
-              <span>🔗 Consultar portal oficial de protección digital</span> <span>↗</span>
-            </a>
+            <!-- Barra de control del vídeo -->
+            <div class="bg-slate-950 p-2.5 flex items-center gap-3 border-t border-slate-800 text-xs">
+              <button type="button" onclick="togglePlayVideo()" id="play-btn" class="w-7 h-7 flex items-center justify-center rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold transition-all">
+                ❚❚
+              </button>
+              <div id="video-progress-bg" class="flex-grow bg-slate-800 h-2 rounded-full overflow-hidden cursor-pointer" onclick="seekVideo(event)">
+                <div id="video-progress" class="bg-gradient-to-r from-indigo-500 to-sky-400 h-full w-0 transition-all duration-200 pointer-events-none"></div>
+              </div>
+              <button type="button" onclick="replayVideo()" class="text-slate-400 hover:text-white text-sm px-1" title="Reiniciar">
+                🔄
+              </button>
+            </div>
           </div>
 
           <!-- Botón de avance al diagnóstico final -->
@@ -264,42 +288,45 @@
   </footer>
 
   <script>
-    const videoData = {
+    const videoStories = {
       menor: {
-        title: "Tips de Blindaje para Menores (AEPD / INCIBE)",
-        tag: "CÁPSULA ILUSTRADA & MEDIDAS DE SEGURIDAD",
+        title: "Tips de Seguridad: Canal Prioritario y Privacidad",
+        tag: "VÍDEO ANIMADO · PROTOCOLO AEPD",
         icon: "⚡",
-        desc: "Pautas de actuación urgente ante filtración de fotos, perfiles falsos y ciberacoso:",
-        extUrl: "https://www.tudecideseninternet.es/",
-        tips: [
-          { icon: "🛑", title: "Corta la difusión de inmediato", text: "Reenviar fotos íntimas o stickers humillantes es un delito penal tipificado. No compartas y sal del chat." },
-          { icon: "🚨", title: "Canal Prioritario AEPD", text: "Existe una vía urgente y gratuita para exigir la retirada en pocas horas de vídeos o fotos difundidas sin tu consentimiento." },
-          { icon: "🛡️", title: "Guarda las pruebas sin borrar", text: "Haz capturas de pantalla de los enlaces, mensajes y perfiles antes de bloquear para poder acreditar los hechos ante tus tutores o la policía." }
-        ]
+        desc: "Visualiza esta cápsula ilustrada antes de acceder a tu calificación:",
+        scenes: [
+          { time: 0, icon: "🛡️", title: "Blindaje de Redes y Perfiles", text: "Tu intimidad no se negocia: perfiles siempre privados y sin desconocidos agregados." },
+          { time: 3, icon: "🚫", title: "Corta la Cadena de Difusión", text: "Reenviar fotos o stickers de burla es delito penal. No compartas y bloquea el chat." },
+          { time: 6, icon: "🚨", title: "Canal Prioritario AEPD", text: "Existe un canal oficial y gratuito para borrar fotos o vídeos íntimos en cuestión de horas." },
+          { time: 9, icon: "📸", title: "Conserva las Pruebas", text: "Haz capturas antes de bloquear para acreditar la situación con tus padres o docentes." }
+        ],
+        duration: 12
       },
       familia: {
-        title: "Guía de Seguridad Digital para Familias (AEPD / INCIBE)",
-        tag: "PAUTAS DE MEDIACIÓN PARENTAL",
+        title: "Mediación Parental y Convivencia Digital Saludable",
+        tag: "VÍDEO ANIMADO · FAMILIAS SEGURAS",
         icon: "👨‍👩‍👧",
-        desc: "Recomendaciones oficiales para proteger a los menores en el entorno doméstico:",
-        extUrl: "https://www.is4k.es/familias",
-        tips: [
-          { icon: "🌙", title: "Pacto de desconexión nocturna", text: "Retirar los dispositivos del dormitorio por la noche previene el insomnio, la dependencia y la sobreexposición silenciosa." },
-          { icon: "💳", title: "Control de compras y micropagos", text: "Configurar contraseñas obligatorias y doble factor en App Store, Google Play y videojuegos para evitar cargos no autorizados." },
-          { icon: "🤝", title: "Pacto de confianza sin castigo", text: "Garantizar al menor que si sufre chantaje o acoso online podrá pedir ayuda en casa sin miedo a que le castiguen quitándole el teléfono." }
-        ]
+        desc: "Criterios esenciales de la AEPD e INCIBE para la convivencia en el hogar:",
+        scenes: [
+          { time: 0, icon: "🌙", title: "Pacto de Sueño sin Pantallas", text: "Los dispositivos no deben dormir en los dormitorios: previene insomnio y riesgos nocturnos." },
+          { time: 3, icon: "💳", title: "Protección Financiera en Apps", text: "Bloquea micropagos y compras in-app en juegos mediante contraseñas y doble factor." },
+          { time: 6, icon: "🤝", title: "Canal de Diálogo sin Represalias", text: "El menor debe sentir que puede pedir ayuda ante un chantaje sin temor a castigos de aislamiento." },
+          { time: 9, icon: "📋", title: "Pacto Digital Familiar", text: "Formalizar acuerdos claros y por escrito reduce discusiones y protege su huella." }
+        ],
+        duration: 12
       },
       docente: {
-        title: "Protocolo de Ciberconvivencia Escolar (AEPD / LOPIVI)",
-        tag: "MEDIDAS DE INTERVENCIÓN EN EL AULA",
+        title: "Protocolo de Ciberacoso y LOPIVI en las Aulas",
+        tag: "VÍDEO ANIMADO · EQUIPOS DOCENTES",
         icon: "🏫",
-        desc: "Criterios jurídicos y preventivos de actuación para equipos docentes y directivos:",
-        extUrl: "https://www.aepd.es/areas-de-actuacion/educacion",
-        tips: [
-          { icon: "⚖️", title: "Custodia de evidencias digitales", text: "Preservar las capturas, enlaces y metadatos de los incidentes en grupos escolares para remitirlos formalmente al Coordinador de Bienestar." },
-          { icon: "📋", title: "Activación inmediata del protocolo LOPIVI", text: "Intervenir formalmente ante el primer indicio de ciberacoso entre alumnos, evitando mediaciones informales que dejen desprotegida a la víctima." },
-          { icon: "🔒", title: "Protección de datos en grupos de clase", text: "Prohibir la captación y difusión no autorizada de fotos o grabaciones de docentes o alumnado dentro del centro escolar." }
-        ]
+        desc: "Pautas de actuación y responsabilidad legal del centro educativo:",
+        scenes: [
+          { time: 0, icon: "⚖️", title: "Cadena de Custodia Digital", text: "Preserva los metadatos y capturas de chats escolares sin invalidar la prueba judicial." },
+          { time: 3, icon: "🛡️", title: "Activación del Protocolo LOPIVI", text: "Actúa de oficio ante indicios de acoso o deepfakes, protegiendo a la víctima de inmediato." },
+          { time: 6, icon: "🔒", title: "Protección de Datos Escolares", text: "Regula el uso de móviles y prohíbe captar imágenes no consentidas de alumnos o claustro." },
+          { time: 9, icon: "🤝", title: "Alianza con las Familias", text: "Notificación y coordinación rápida con las familias ante cualquier incidente detectado." }
+        ],
+        duration: 12
       }
     };
 
@@ -355,6 +382,11 @@
     let answersLog = [];
     let isAnswering = false;
 
+    // Control del Reproductor de Vídeo Animado
+    let videoTimerInterval = null;
+    let currentVideoSec = 0;
+    let isVideoPlaying = false;
+
     function startTest(profile, detail) {
       currentProfile = profile;
       currentDetail = detail;
@@ -362,6 +394,8 @@
       totalScore = 0;
       answersLog = [];
       isAnswering = false;
+
+      stopVideoEngine();
 
       document.getElementById('step-intro').classList.add('hidden');
       document.getElementById('step-video').classList.add('hidden');
@@ -436,38 +470,120 @@
       }
     }
 
+    // MOTOR DEL VÍDEO ANIMADO
     function launchVideoStage() {
       document.getElementById('step-quiz').classList.add('hidden');
       document.getElementById('step-video').classList.remove('hidden');
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
-      const config = videoData[currentProfile];
-      if (config) {
-        document.getElementById('video-title').innerText = config.title;
-        document.getElementById('video-tag').innerText = config.tag;
-        document.getElementById('video-icon').innerText = config.icon;
-        document.getElementById('video-description').innerText = config.desc;
-        document.getElementById('video-ext-link').href = config.extUrl;
+      const story = videoStories[currentProfile];
+      if (!story) return;
 
-        const tipsContainer = document.getElementById('video-tips-content');
-        tipsContainer.innerHTML = '';
+      document.getElementById('video-title').innerText = story.title;
+      document.getElementById('video-tag').innerText = story.tag;
+      document.getElementById('video-icon').innerText = story.icon;
+      document.getElementById('video-description').innerText = story.desc;
 
-        config.tips.forEach((tip) => {
-          const item = document.createElement('div');
-          item.className = "p-3.5 bg-slate-900/90 rounded-xl border border-slate-800 flex items-start gap-3 text-left shadow-sm";
-          item.innerHTML = `
-            <span class="text-2xl flex-shrink-0">${tip.icon}</span>
-            <div>
-              <h4 class="text-xs sm:text-sm font-bold text-white mb-0.5">${tip.title}</h4>
-              <p class="text-[11px] sm:text-xs text-slate-300 leading-relaxed">${tip.text}</p>
-            </div>
-          `;
-          tipsContainer.appendChild(item);
-        });
+      currentVideoSec = 0;
+      isVideoPlaying = true;
+      document.getElementById('play-btn').innerText = '❚❚';
+
+      updateVideoFrame();
+      clearInterval(videoTimerInterval);
+      videoTimerInterval = setInterval(videoTick, 1000);
+    }
+
+    function videoTick() {
+      if (!isVideoPlaying) return;
+      const story = videoStories[currentProfile];
+      if (!story) return;
+
+      currentVideoSec++;
+      if (currentVideoSec > story.duration) {
+        currentVideoSec = story.duration;
+        isVideoPlaying = false;
+        document.getElementById('play-btn').innerText = '▶';
+        clearInterval(videoTimerInterval);
+      }
+
+      updateVideoFrame();
+    }
+
+    function updateVideoFrame() {
+      const story = videoStories[currentProfile];
+      if (!story) return;
+
+      let activeScene = story.scenes[0];
+      for (let sc of story.scenes) {
+        if (currentVideoSec >= sc.time) {
+          activeScene = sc;
+        }
+      }
+
+      document.getElementById('anim-frame-icon').innerText = activeScene.icon;
+      document.getElementById('anim-frame-title').innerText = activeScene.title;
+      document.getElementById('anim-frame-sub').innerText = activeScene.text;
+
+      const m = Math.floor(currentVideoSec / 60).toString().padStart(2, '0');
+      const s = (currentVideoSec % 60).toString().padStart(2, '0');
+      document.getElementById('video-timer').innerText = `${m}:${s}`;
+
+      const pct = (currentVideoSec / story.duration) * 100;
+      document.getElementById('video-progress').style.width = `${pct}%`;
+    }
+
+    function togglePlayVideo() {
+      const story = videoStories[currentProfile];
+      if (!story) return;
+
+      if (currentVideoSec >= story.duration) {
+        currentVideoSec = 0;
+      }
+
+      isVideoPlaying = !isVideoPlaying;
+      document.getElementById('play-btn').innerText = isVideoPlaying ? '❚❚' : '▶';
+
+      if (isVideoPlaying) {
+        clearInterval(videoTimerInterval);
+        videoTimerInterval = setInterval(videoTick, 1000);
+      } else {
+        clearInterval(videoTimerInterval);
       }
     }
 
+    function replayVideo() {
+      currentVideoSec = 0;
+      isVideoPlaying = true;
+      document.getElementById('play-btn').innerText = '❚❚';
+      updateVideoFrame();
+      clearInterval(videoTimerInterval);
+      videoTimerInterval = setInterval(videoTick, 1000);
+    }
+
+    // Navegación interactiva en la barra de tiempo
+    function seekVideo(event) {
+      const story = videoStories[currentProfile];
+      if (!story) return;
+
+      const bar = document.getElementById('video-progress-bg');
+      const rect = bar.getBoundingClientRect();
+      const clickX = event.clientX - rect.left;
+      const width = rect.width;
+      const percentage = Math.max(0, Math.min(1, clickX / width));
+
+      currentVideoSec = Math.round(percentage * story.duration);
+      updateVideoFrame();
+    }
+
+    function stopVideoEngine() {
+      clearInterval(videoTimerInterval);
+      isVideoPlaying = false;
+      currentVideoSec = 0;
+    }
+
     function showFinalResultsNow() {
+      stopVideoEngine();
+
       document.getElementById('step-quiz').classList.add('hidden');
       document.getElementById('step-video').classList.add('hidden');
       document.getElementById('step-result').classList.remove('hidden');
@@ -557,6 +673,7 @@
     }
 
     function resetToHome() {
+      stopVideoEngine();
       document.getElementById('step-result').classList.add('hidden');
       document.getElementById('step-video').classList.add('hidden');
       document.getElementById('step-quiz').classList.add('hidden');
@@ -579,4 +696,4 @@
     }
   </script>
 </body>
-</html>
+</html>    
