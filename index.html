@@ -8,7 +8,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
+    body { 
+      font-family: 'Plus Jakarta Sans', sans-serif; 
+      -webkit-tap-highlight-color: transparent; 
+      touch-action: manipulation;
+    }
     .handwriting { font-family: 'Caveat', cursive; }
     .fade-enter { animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
     @keyframes fadeIn {
@@ -41,6 +45,16 @@
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-indigo-500 selection:text-white relative">
+
+  <!-- FONDO TRASLÚCIDO / MARCA DE AGUA DEL LOGO -->
+  <div class="fixed inset-0 pointer-events-none z-0 flex items-center justify-center overflow-hidden">
+    <img 
+      src="photo.jpg" 
+      alt="Frente a Frente Fondo" 
+      class="w-[85vw] max-w-xl h-auto object-contain opacity-[0.06] filter grayscale contrast-125 scale-110 sm:scale-125"
+      onerror="this.style.display='none'"
+    >
+  </div>
 
   <!-- Animación de Emoticono al responder (Menores) -->
   <div id="emoji-floater" style="display: none;" class="fixed inset-0 pointer-events-none z-50 flex items-center justify-center">
@@ -103,7 +117,7 @@
         <div class="space-y-4 text-left">
           
           <!-- SECCIÓN 1: Menor (12-17 años) con botones directos -->
-          <div class="p-4 sm:p-5 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-indigo-500 transition-all">
+          <div class="p-4 sm:p-5 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-indigo-500 transition-all backdrop-blur-sm">
             <div class="flex items-center gap-3 mb-3">
               <div class="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center text-xl">⚡</div>
               <div>
@@ -123,7 +137,7 @@
           </div>
 
           <!-- SECCIÓN 2: Madres, Padres o Tutores -->
-          <div class="p-4 sm:p-5 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-sky-500 transition-all">
+          <div class="p-4 sm:p-5 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-sky-500 transition-all backdrop-blur-sm">
             <div class="flex items-center gap-3 mb-3">
               <div class="w-10 h-10 rounded-xl bg-sky-500/10 flex items-center justify-center text-xl">👨‍👩‍👧</div>
               <div>
@@ -141,7 +155,7 @@
           </div>
 
           <!-- SECCIÓN 3: Docentes / Centros Educativos -->
-          <div class="p-4 sm:p-5 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-emerald-500 transition-all">
+          <div class="p-4 sm:p-5 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-emerald-500 transition-all backdrop-blur-sm">
             <div class="flex items-center gap-3 mb-3">
               <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-xl">🏫</div>
               <div>
@@ -173,18 +187,18 @@
           </div>
         </div>
 
-        <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-5 sm:p-7 shadow-xl fade-enter">
+        <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-5 sm:p-7 shadow-xl fade-enter backdrop-blur-md">
           <span id="category-badge" class="inline-block text-[10px] uppercase font-bold tracking-wider px-2.5 py-1 rounded-md bg-slate-800 text-indigo-300 border border-slate-700/60 mb-3"></span>
           <h2 id="question-text" class="text-base sm:text-lg font-bold text-white mb-5 leading-snug"></h2>
           <div id="answers-container" class="space-y-2.5"></div>
         </div>
       </section>
 
-      <!-- PANTALLA INTERMEDIA: CUADERNO DIGITAL ANIMADO -->
+      <!-- PANTALLA INTERMEDIA: CUADERNO DIGITAL CON MEDIDAS DE PREVENCIÓN -->
       <section id="step-notebook" class="hidden fade-enter">
-        <div class="notebook-paper border-2 border-indigo-500/40 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+        <div class="notebook-paper border-2 border-indigo-500/40 rounded-3xl p-5 sm:p-8 shadow-2xl relative overflow-hidden backdrop-blur-md">
           
-          <!-- Espiral superior -->
+          <!-- Espiral superior decorativa de libreta -->
           <div class="flex justify-around mb-4 border-b border-indigo-500/20 pb-2">
             <span class="w-3 h-5 bg-slate-800 rounded-full border border-slate-600 block shadow-inner"></span>
             <span class="w-3 h-5 bg-slate-800 rounded-full border border-slate-600 block shadow-inner"></span>
@@ -194,59 +208,80 @@
           </div>
 
           <div class="flex items-center justify-between mb-4">
-            <span class="handwriting text-xl sm:text-2xl text-indigo-300 tracking-wide">Cuaderno de Campo Digital · Frente a Frente</span>
-            <span class="text-[10px] uppercase tracking-wider font-mono px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 animate-pulse">ANALIZANDO</span>
+            <div>
+              <span class="handwriting text-xl sm:text-2xl text-indigo-300 tracking-wide block leading-tight">Cuaderno de Blindaje · Frente a Frente</span>
+              <span class="text-[11px] text-slate-400 font-medium">3 Medidas Clave para Reducir Riesgos a Cero</span>
+            </div>
+            <span class="text-[10px] uppercase tracking-wider font-mono px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 animate-pulse">PASO PREVENTIVO</span>
           </div>
 
-          <!-- Notas manuscritas -->
-          <div class="space-y-3 mb-6">
-            <div id="note-1" class="p-3 bg-indigo-950/60 border-l-4 border-indigo-400 rounded-r-xl transition-all duration-500 opacity-0 transform translate-x-3">
-              <p class="text-xs sm:text-sm font-semibold text-white flex items-center gap-2">
-                <span>🔍</span> <span>Escaneando exposición en redes sociales y juegos...</span>
-              </p>
+          <!-- NOTAS MANUSCRITAS CON MEDIDAS PREVENTIVAS -->
+          <div class="space-y-3.5 mb-5">
+            <div id="note-1" class="p-3.5 bg-indigo-950/80 border-l-4 border-indigo-400 rounded-r-xl transition-all duration-700 opacity-0 transform translate-x-3">
+              <div class="flex items-start gap-2.5">
+                <span class="text-xl">🔒</span>
+                <div>
+                  <h4 class="text-xs sm:text-sm font-bold text-white mb-0.5">1. Blindaje de Perfiles e Inteligencia Artificial</h4>
+                  <p class="text-[11px] sm:text-xs text-slate-300 leading-relaxed">
+                    Mantén cuentas privadas, no aceptes a desconocidos y <strong>evita subir fotos a apps de IA</strong> que clonen tu rostro o cuerpo.
+                  </p>
+                </div>
+              </div>
             </div>
 
-            <div id="note-2" class="p-3 bg-sky-950/60 border-l-4 border-sky-400 rounded-r-xl transition-all duration-500 opacity-0 transform translate-x-3">
-              <p class="text-xs sm:text-sm font-semibold text-white flex items-center gap-2">
-                <span>🛡️</span> <span>Verificando defensas ante stickers, IA y contactos desconocidos...</span>
-              </p>
+            <div id="note-2" class="p-3.5 bg-sky-950/80 border-l-4 border-sky-400 rounded-r-xl transition-all duration-700 opacity-0 transform translate-x-3">
+              <div class="flex items-start gap-2.5">
+                <span class="text-xl">🛑</span>
+                <div>
+                  <h4 class="text-xs sm:text-sm font-bold text-white mb-0.5">2. Rompe la Cadena: Cero Difusión de Stickers o Fotos</h4>
+                  <p class="text-[11px] sm:text-xs text-slate-300 leading-relaxed">
+                    Reenviar fotos íntimas o stickers humillantes es delito. Si ves un abuso, <strong>no lo compartas</strong>, guarda la prueba y ayuda a frenarlo.
+                  </p>
+                </div>
+              </div>
             </div>
 
-            <div id="note-3" class="p-3 bg-amber-950/60 border-l-4 border-amber-400 rounded-r-xl transition-all duration-500 opacity-0 transform translate-x-3">
-              <p class="text-xs sm:text-sm font-semibold text-white flex items-center gap-2">
-                <span>⚖️</span> <span>Calculando índice de bienestar emocional y privacidad legal...</span>
-              </p>
+            <div id="note-3" class="p-3.5 bg-emerald-950/80 border-l-4 border-emerald-400 rounded-r-xl transition-all duration-700 opacity-0 transform translate-x-3">
+              <div class="flex items-start gap-2.5">
+                <span class="text-xl">🛡️</span>
+                <div>
+                  <h4 class="text-xs sm:text-sm font-bold text-white mb-0.5">3. Canal Prioritario de la AEPD y Confianza</h4>
+                  <p class="text-[11px] sm:text-xs text-slate-300 leading-relaxed">
+                    Ante cualquier chantaje, <strong>nunca pagues ni te aísles</strong>. Existen canales legales para borrar contenido en horas y apoyo profesional sin represalias.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 
-          <!-- Barra de progreso -->
+          <!-- Barra de progreso sincronizada -->
           <div class="mb-4">
             <div class="flex justify-between text-[11px] text-slate-400 font-mono mb-1">
-              <span id="notebook-status-text">Procesando respuestas...</span>
-              <span id="notebook-percent">30%</span>
+              <span id="notebook-status-text">Procesando medidas de blindaje...</span>
+              <span id="notebook-percent">25%</span>
             </div>
             <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden border border-slate-700">
-              <div id="notebook-progress" class="h-full bg-gradient-to-r from-indigo-500 via-sky-400 to-emerald-400 transition-all duration-700 ease-out" style="width: 30%"></div>
+              <div id="notebook-progress" class="h-full bg-gradient-to-r from-indigo-500 via-sky-400 to-emerald-400 transition-all duration-1000 ease-out" style="width: 25%"></div>
             </div>
           </div>
 
           <!-- Sello pericial -->
-          <div id="notebook-stamp" class="hidden text-center my-4">
-            <span class="inline-block border-2 border-dashed border-emerald-400 text-emerald-400 font-black text-sm sm:text-base uppercase tracking-widest px-4 py-1.5 rounded-lg stamp-effect shadow-[0_0_15px_rgba(52,211,153,0.3)]">
-              ✔ DICTAMEN DE BLINDAJE LISTO
+          <div id="notebook-stamp" class="hidden text-center my-3">
+            <span class="inline-block border-2 border-dashed border-emerald-400 text-emerald-400 font-black text-xs sm:text-sm uppercase tracking-widest px-4 py-1.5 rounded-lg stamp-effect shadow-[0_0_15px_rgba(52,211,153,0.3)]">
+              ✔ DICTAMEN PERICIAL EMITIDO
             </span>
           </div>
 
           <!-- Botón de acceso directo -->
           <button type="button" onclick="showFinalResultsNow()" class="w-full mt-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs sm:text-sm py-2.5 rounded-xl transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2">
-            <span>Acceder al Resultado</span> <span>→</span>
+            <span>Acceder a mi Diagnóstico</span> <span>→</span>
           </button>
         </div>
       </section>
 
       <!-- PANTALLA 4: Dictamen de Resultados -->
       <section id="step-result" class="hidden fade-enter">
-        <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 text-center shadow-xl">
+        <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 text-center shadow-xl backdrop-blur-md">
           <div id="result-icon" class="w-16 h-16 mx-auto mb-3 rounded-2xl flex items-center justify-center text-3xl"></div>
           <span id="result-score-badge" class="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-2 inline-block"></span>
           <h2 id="result-title" class="text-xl sm:text-2xl font-extrabold text-white mb-2"></h2>
@@ -278,7 +313,7 @@
   </main>
 
   <!-- Pie de Página -->
-  <footer class="border-t border-slate-900 bg-slate-950 py-5 px-4 text-center">
+  <footer class="border-t border-slate-900 bg-slate-950 py-5 px-4 text-center relative z-10">
     <p class="text-xs text-slate-400 font-semibold mb-1">Frente a Frente</p>
     <p class="text-[11px] text-slate-600 max-w-md mx-auto">
       Consultoría interdisciplinar: Defensa Jurídica del Menor en Medios Digitales, Psicología Infanto-Juvenil y Mediación Escolar/Familiar.
@@ -540,40 +575,51 @@
       const sText = document.getElementById('notebook-status-text');
       const stamp = document.getElementById('notebook-stamp');
 
-      // Reseteo de estados para animación limpia
-      n1.className = "p-3 bg-indigo-950/60 border-l-4 border-indigo-400 rounded-r-xl transition-all duration-500 opacity-0 transform translate-x-3";
-      n2.className = "p-3 bg-sky-950/60 border-l-4 border-sky-400 rounded-r-xl transition-all duration-500 opacity-0 transform translate-x-3";
-      n3.className = "p-3 bg-amber-950/60 border-l-4 border-amber-400 rounded-r-xl transition-all duration-500 opacity-0 transform translate-x-3";
+      // Reseteo forzado de estados para repetición limpia
+      n1.className = "p-3.5 bg-indigo-950/80 border-l-4 border-indigo-400 rounded-r-xl transition-all duration-700 opacity-0 transform translate-x-3";
+      n2.className = "p-3.5 bg-sky-950/80 border-l-4 border-sky-400 rounded-r-xl transition-all duration-700 opacity-0 transform translate-x-3";
+      n3.className = "p-3.5 bg-emerald-950/80 border-l-4 border-emerald-400 rounded-r-xl transition-all duration-700 opacity-0 transform translate-x-3";
       stamp.classList.add('hidden');
-      pBar.style.width = '30%';
-      pText.innerText = '30%';
-      sText.innerText = 'Procesando respuestas del adolescente...';
+      pBar.style.width = '0%';
+      pText.innerText = '0%';
+      sText.innerText = 'Cargando protocolo de blindaje preventivo...';
+
+      notebookTimers.push(setTimeout(() => {
+        pBar.style.width = '25%';
+        pText.innerText = '25%';
+      }, 300));
 
       notebookTimers.push(setTimeout(() => {
         n1.classList.remove('opacity-0', 'translate-x-3');
-        pBar.style.width = '60%';
-        pText.innerText = '60%';
-        sText.innerText = 'Contrastando respuestas con baremos de riesgo...';
-      }, 700));
+        pBar.style.width = '50%';
+        pText.innerText = '50%';
+        sText.innerText = 'Pauta 1: Protección de identidad digital activa...';
+      }, 1200));
 
       notebookTimers.push(setTimeout(() => {
         n2.classList.remove('opacity-0', 'translate-x-3');
-        pBar.style.width = '85%';
-        pText.innerText = '85%';
-        sText.innerText = 'Generando índice pericial preliminar...';
-      }, 1600));
+        pBar.style.width = '75%';
+        pText.innerText = '75%';
+        sText.innerText = 'Pauta 2: Responsabilidad y corte de cadenas...';
+      }, 4200));
 
       notebookTimers.push(setTimeout(() => {
         n3.classList.remove('opacity-0', 'translate-x-3');
+        pBar.style.width = '90%';
+        pText.innerText = '90%';
+        sText.innerText = 'Pauta 3: Vías de auxilio y confidencialidad...';
+      }, 7200));
+
+      notebookTimers.push(setTimeout(() => {
         pBar.style.width = '100%';
         pText.innerText = '100%';
         sText.innerText = 'Blindaje analizado con éxito.';
         stamp.classList.remove('hidden');
-      }, 2600));
+      }, 10000));
 
       notebookTimers.push(setTimeout(() => {
         showFinalResultsNow();
-      }, 4200));
+      }, 12500));
     }
 
     function showFinalResultsNow() {
@@ -631,7 +677,8 @@
 
     function submitResults(e) {
       e.preventDefault();
-      const email = document.getElementById('user-email').value;
+      const emailInput = document.getElementById('user-email');
+      const email = emailInput ? emailInput.value.trim() : '';
       
       const payload = {
         marca: "Frente a Frente",
@@ -643,7 +690,16 @@
         timestamp: new Date().toISOString()
       };
       
-      console.log("Expediente preliminar registrado:", payload);
+      // Respaldo de seguridad en el almacenamiento local del dispositivo
+      try {
+        const historico = JSON.parse(localStorage.getItem('faf_expedientes') || '[]');
+        historico.push(payload);
+        localStorage.setItem('faf_expedientes', JSON.stringify(historico));
+      } catch (err) {
+        console.warn("Almacenamiento local restringido", err);
+      }
+
+      console.log("Expediente pericial emitido:", payload);
 
       document.getElementById('contact-form').classList.add('hidden');
       document.getElementById('success-msg').classList.remove('hidden');
