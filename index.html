@@ -80,7 +80,7 @@
   <main class="flex-grow flex items-center justify-center px-4 py-6 sm:py-10 relative z-10">
     <div class="w-full max-w-xl mx-auto">
       
-      <!-- PANTALLA 1: Portada y Selección Inmediata -->
+      <!-- PANTALLA 1: Portada, Selección Inmediata y Acceso Directo a Vídeos -->
       <section id="step-intro" class="fade-enter text-center">
         <!-- LOGO CENTRAL EXTRA GRANDE Y LEGIBLE -->
         <div class="flex justify-center mb-6">
@@ -106,10 +106,10 @@
           Pulsa tu edad o perfil para iniciar la evaluación técnica y psicológica confidencial.
         </p>
 
-        <!-- Bloque de Selección Directa -->
-        <div class="space-y-4 text-left">
+        <!-- Bloque de Selección Directa de Test -->
+        <div class="space-y-4 text-left mb-8">
           
-          <!-- SECCIÓN 1: Menor (12-17 años) con botones directos -->
+          <!-- SECCIÓN 1: Menor (12-17 años) -->
           <div class="p-4 sm:p-5 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-indigo-500 transition-all backdrop-blur-sm">
             <div class="flex items-center gap-3 mb-3">
               <div class="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center text-xl">⚡</div>
@@ -166,6 +166,35 @@
           </div>
 
         </div>
+
+        <!-- SECCIÓN DE VÍDEOS EN PORTADA: ACCESO DIRECTO EN CUALQUIER MOMENTO -->
+        <div class="p-4 sm:p-5 rounded-2xl bg-slate-900/80 border border-slate-800 text-left backdrop-blur-sm">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="text-lg">🎬</span>
+            <h3 class="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">Cápsulas de Seguridad Digital (AEPD / INCIBE)</h3>
+          </div>
+          <p class="text-[11px] text-slate-400 mb-3">
+            Accede y visualiza directamente los vídeos animados con medidas de protección preventiva en cualquier momento:
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <button type="button" onclick="watchVideoDirectly('menor')" class="p-3 rounded-xl bg-indigo-950/60 hover:bg-indigo-600 border border-indigo-500/30 text-left transition-all active:scale-95 group">
+              <span class="text-lg block mb-1">⚡</span>
+              <span class="text-xs font-bold text-white block leading-tight group-hover:text-white">Vídeo Menores</span>
+              <span class="text-[10px] text-indigo-300 block">Privacidad e IA</span>
+            </button>
+            <button type="button" onclick="watchVideoDirectly('familia')" class="p-3 rounded-xl bg-sky-950/60 hover:bg-sky-600 border border-sky-500/30 text-left transition-all active:scale-95 group">
+              <span class="text-lg block mb-1">👨‍👩‍👧</span>
+              <span class="text-xs font-bold text-white block leading-tight group-hover:text-white">Vídeo Familias</span>
+              <span class="text-[10px] text-sky-300 block">Límites y Hogar</span>
+            </button>
+            <button type="button" onclick="watchVideoDirectly('docente')" class="p-3 rounded-xl bg-emerald-950/60 hover:bg-emerald-600 border border-emerald-500/30 text-left transition-all active:scale-95 group">
+              <span class="text-lg block mb-1">🏫</span>
+              <span class="text-xs font-bold text-white block leading-tight group-hover:text-white">Vídeo Docentes</span>
+              <span class="text-[10px] text-emerald-300 block">LOPIVI y Aulas</span>
+            </button>
+          </div>
+        </div>
+
       </section>
 
       <!-- PANTALLA 2: Formulario de Preguntas -->
@@ -201,7 +230,7 @@
 
           <p id="video-description" class="text-xs text-slate-300 mb-3 leading-relaxed"></p>
 
-          <!-- ESCENARIO DEL VÍDEO -->
+          <!-- ESCENARIO DEL VÍDEO (24s - 6s POR ESCENA) -->
           <div class="relative rounded-2xl overflow-hidden border border-slate-800 shadow-2xl mb-3">
             <div id="player-screen" class="screen-stage w-full flex flex-col items-center justify-center p-6 sm:p-8 text-center relative select-none">
               
@@ -240,8 +269,8 @@
             </div>
           </div>
 
-          <!-- Botón para avanzar -->
-          <button type="button" onclick="showFinalResultsNow()" class="w-full bg-gradient-to-r from-indigo-600 via-sky-600 to-indigo-600 hover:opacity-90 text-white font-bold text-xs sm:text-sm py-3 rounded-xl transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2">
+          <!-- Botón de avance según el contexto -->
+          <button id="video-next-btn" type="button" onclick="handleVideoNextAction()" class="w-full bg-gradient-to-r from-indigo-600 via-sky-600 to-indigo-600 hover:opacity-90 text-white font-bold text-xs sm:text-sm py-3 rounded-xl transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2">
             <span>Continuar a mi Dictamen de Blindaje</span> <span>→</span>
           </button>
         </div>
@@ -274,10 +303,13 @@
           <div id="success-msg" class="hidden bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 p-4 rounded-xl text-xs sm:text-sm font-semibold mt-4">
             ✓ Expediente preliminar registrado correctamente. El equipo interdisciplinar de Frente a Frente procesará su solicitud con estricta reserva.
           </div>
-          
-          <button type="button" onclick="resetToHome()" class="mt-6 text-xs text-slate-400 hover:text-white underline block mx-auto transition-colors">
-            ← Realizar otra evaluación
-          </button>
+
+          <!-- BOTÓN DESTACADO PARA VOLVER AL INICIO Y REALIZAR OTRO TEST -->
+          <div class="mt-6 pt-5 border-t border-slate-800">
+            <button type="button" onclick="resetToHome()" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs sm:text-sm py-3 px-4 rounded-xl transition-all border border-slate-700 flex items-center justify-center gap-2 active:scale-95 shadow-md">
+              <span>🔄</span> <span>Volver al Inicio y Realizar Otro Test</span>
+            </button>
+          </div>
         </div>
       </section>
 
@@ -386,10 +418,21 @@
     let totalScore = 0;
     let answersLog = [];
     let isAnswering = false;
+    let isDirectVideoMode = false;
 
+    // Control del Reproductor
     let videoTimerInterval = null;
     let currentVideoSec = 0;
     let isVideoPlaying = false;
+
+    function stopVideoEngine() {
+      if (videoTimerInterval) {
+        clearInterval(videoTimerInterval);
+        videoTimerInterval = null;
+      }
+      isVideoPlaying = false;
+      currentVideoSec = 0;
+    }
 
     function startTest(profile, detail) {
       currentProfile = profile;
@@ -398,6 +441,7 @@
       totalScore = 0;
       answersLog = [];
       isAnswering = false;
+      isDirectVideoMode = false;
 
       stopVideoEngine();
 
@@ -408,6 +452,32 @@
       
       window.scrollTo({ top: 0, behavior: 'smooth' });
       renderQuestion();
+    }
+
+    function watchVideoDirectly(profile) {
+      currentProfile = profile;
+      isDirectVideoMode = true;
+      stopVideoEngine();
+
+      document.getElementById('step-intro').classList.add('hidden');
+      document.getElementById('step-quiz').classList.add('hidden');
+      document.getElementById('step-result').classList.add('hidden');
+      document.getElementById('step-video').classList.remove('hidden');
+
+      const nextBtn = document.getElementById('video-next-btn');
+      if (nextBtn) {
+        nextBtn.innerHTML = `<span>← Volver al Inicio de Frente a Frente</span>`;
+      }
+
+      launchVideoStage();
+    }
+
+    function handleVideoNextAction() {
+      if (isDirectVideoMode) {
+        resetToHome();
+      } else {
+        showFinalResultsNow();
+      }
     }
 
     function renderQuestion() {
@@ -469,6 +539,11 @@
       } else {
         setTimeout(() => {
           isAnswering = false;
+          isDirectVideoMode = false;
+          const nextBtn = document.getElementById('video-next-btn');
+          if (nextBtn) {
+            nextBtn.innerHTML = `<span>Continuar a mi Dictamen de Blindaje</span> <span>→</span>`;
+          }
           launchVideoStage();
         }, 150);
       }
@@ -577,12 +652,6 @@
       updateVideoFrame();
     }
 
-    function stopVideoEngine() {
-      clearInterval(videoTimerInterval);
-      isVideoPlaying = false;
-      currentVideoSec = 0;
-    }
-
     function showFinalResultsNow() {
       stopVideoEngine();
 
@@ -676,6 +745,7 @@
 
     function resetToHome() {
       stopVideoEngine();
+      isDirectVideoMode = false;
       document.getElementById('step-result').classList.add('hidden');
       document.getElementById('step-video').classList.add('hidden');
       document.getElementById('step-quiz').classList.add('hidden');
