@@ -13,7 +13,6 @@
       -webkit-tap-highlight-color: transparent; 
       touch-action: manipulation;
     }
-    .handwriting { font-family: 'Caveat', cursive; }
     .fade-enter { animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(6px); }
@@ -27,20 +26,19 @@
       50% { opacity: 1; transform: scale(1.2) translateY(-10px); }
       100% { opacity: 0; transform: scale(1) translateY(-25px); }
     }
-    .notebook-paper {
-      background-color: #0f172a;
-      background-image: 
-        linear-gradient(to right, rgba(99, 102, 241, 0.08) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(99, 102, 241, 0.08) 1px, transparent 1px);
-      background-size: 20px 20px;
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
     }
-    @keyframes stampAnim {
-      0% { opacity: 0; transform: scale(2) rotate(-15deg); }
-      70% { opacity: 1; transform: scale(0.9) rotate(-6deg); }
-      100% { opacity: 1; transform: scale(1) rotate(-8deg); }
-    }
-    .stamp-effect {
-      animation: stampAnim 0.45s ease-out forwards;
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 1rem;
     }
   </style>
 </head>
@@ -194,87 +192,28 @@
         </div>
       </section>
 
-      <!-- PANTALLA INTERMEDIA: CUADERNO DIGITAL CON MEDIDAS DE PREVENCIÓN -->
-      <section id="step-notebook" class="hidden fade-enter">
-        <div class="notebook-paper border-2 border-indigo-500/40 rounded-3xl p-5 sm:p-8 shadow-2xl relative overflow-hidden backdrop-blur-md">
+      <!-- PANTALLA INTERMEDIA: REPRODUCTOR DE VÍDEOS DE SEGURIDAD (DIFERENCIADO POR PERFIL) -->
+      <section id="step-video" class="hidden fade-enter">
+        <div class="bg-slate-900/95 border-2 border-indigo-500/40 rounded-3xl p-5 sm:p-7 shadow-2xl relative overflow-hidden backdrop-blur-md">
           
-          <!-- Espiral superior decorativa de libreta -->
-          <div class="flex justify-around mb-4 border-b border-indigo-500/20 pb-2">
-            <span class="w-3 h-5 bg-slate-800 rounded-full border border-slate-600 block shadow-inner"></span>
-            <span class="w-3 h-5 bg-slate-800 rounded-full border border-slate-600 block shadow-inner"></span>
-            <span class="w-3 h-5 bg-slate-800 rounded-full border border-slate-600 block shadow-inner"></span>
-            <span class="w-3 h-5 bg-slate-800 rounded-full border border-slate-600 block shadow-inner"></span>
-            <span class="w-3 h-5 bg-slate-800 rounded-full border border-slate-600 block shadow-inner"></span>
-          </div>
-
-          <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center justify-between mb-3">
             <div>
-              <span class="handwriting text-xl sm:text-2xl text-indigo-300 tracking-wide block leading-tight">Cuaderno de Blindaje · Frente a Frente</span>
-              <span class="text-[11px] text-slate-400 font-medium">3 Medidas Clave para Reducir Riesgos a Cero</span>
+              <span id="video-tag" class="text-[10px] uppercase tracking-wider font-bold px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">CÁPSULA OFICIAL AEPD</span>
+              <h3 id="video-title" class="text-base sm:text-lg font-extrabold text-white mt-1"></h3>
             </div>
-            <span class="text-[10px] uppercase tracking-wider font-mono px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 animate-pulse">PASO PREVENTIVO</span>
+            <span class="text-2xl" id="video-icon">🛡️</span>
           </div>
 
-          <!-- NOTAS MANUSCRITAS CON MEDIDAS PREVENTIVAS -->
-          <div class="space-y-3.5 mb-5">
-            <div id="note-1" class="p-3.5 bg-indigo-950/80 border-l-4 border-indigo-400 rounded-r-xl transition-all duration-700 opacity-0 transform translate-x-3">
-              <div class="flex items-start gap-2.5">
-                <span class="text-xl">🔒</span>
-                <div>
-                  <h4 class="text-xs sm:text-sm font-bold text-white mb-0.5">1. Blindaje de Perfiles e Inteligencia Artificial</h4>
-                  <p class="text-[11px] sm:text-xs text-slate-300 leading-relaxed">
-                    Mantén cuentas privadas, no aceptes a desconocidos y <strong>evita subir fotos a apps de IA</strong> que clonen tu rostro o cuerpo.
-                  </p>
-                </div>
-              </div>
-            </div>
+          <p id="video-description" class="text-xs text-slate-300 mb-4 leading-relaxed"></p>
 
-            <div id="note-2" class="p-3.5 bg-sky-950/80 border-l-4 border-sky-400 rounded-r-xl transition-all duration-700 opacity-0 transform translate-x-3">
-              <div class="flex items-start gap-2.5">
-                <span class="text-xl">🛑</span>
-                <div>
-                  <h4 class="text-xs sm:text-sm font-bold text-white mb-0.5">2. Rompe la Cadena: Cero Difusión de Stickers o Fotos</h4>
-                  <p class="text-[11px] sm:text-xs text-slate-300 leading-relaxed">
-                    Reenviar fotos íntimas o stickers humillantes es delito. Si ves un abuso, <strong>no lo compartas</strong>, guarda la prueba y ayuda a frenarlo.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div id="note-3" class="p-3.5 bg-emerald-950/80 border-l-4 border-emerald-400 rounded-r-xl transition-all duration-700 opacity-0 transform translate-x-3">
-              <div class="flex items-start gap-2.5">
-                <span class="text-xl">🛡️</span>
-                <div>
-                  <h4 class="text-xs sm:text-sm font-bold text-white mb-0.5">3. Canal Prioritario de la AEPD y Confianza</h4>
-                  <p class="text-[11px] sm:text-xs text-slate-300 leading-relaxed">
-                    Ante cualquier chantaje, <strong>nunca pagues ni te aísles</strong>. Existen canales legales para borrar contenido en horas y apoyo profesional sin represalias.
-                  </p>
-                </div>
-              </div>
-            </div>
+          <!-- Contenedor Responsivo del Vídeo Oficial -->
+          <div id="video-wrapper" class="video-container rounded-2xl border border-slate-800 shadow-inner bg-slate-950 mb-5">
+            <!-- El iframe se inyecta programáticamente para evitar bloqueos y fugas -->
           </div>
 
-          <!-- Barra de progreso sincronizada -->
-          <div class="mb-4">
-            <div class="flex justify-between text-[11px] text-slate-400 font-mono mb-1">
-              <span id="notebook-status-text">Procesando medidas de blindaje...</span>
-              <span id="notebook-percent">25%</span>
-            </div>
-            <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden border border-slate-700">
-              <div id="notebook-progress" class="h-full bg-gradient-to-r from-indigo-500 via-sky-400 to-emerald-400 transition-all duration-1000 ease-out" style="width: 25%"></div>
-            </div>
-          </div>
-
-          <!-- Sello pericial -->
-          <div id="notebook-stamp" class="hidden text-center my-3">
-            <span class="inline-block border-2 border-dashed border-emerald-400 text-emerald-400 font-black text-xs sm:text-sm uppercase tracking-widest px-4 py-1.5 rounded-lg stamp-effect shadow-[0_0_15px_rgba(52,211,153,0.3)]">
-              ✔ DICTAMEN PERICIAL EMITIDO
-            </span>
-          </div>
-
-          <!-- Botón de acceso directo -->
-          <button type="button" onclick="showFinalResultsNow()" class="w-full mt-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs sm:text-sm py-2.5 rounded-xl transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2">
-            <span>Acceder a mi Diagnóstico</span> <span>→</span>
+          <!-- Botón de avance al diagnóstico final -->
+          <button type="button" onclick="showFinalResultsNow()" class="w-full bg-gradient-to-r from-indigo-600 via-sky-600 to-indigo-600 hover:opacity-90 text-white font-bold text-xs sm:text-sm py-3 rounded-xl transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2">
+            <span>Continuar a mi Dictamen de Blindaje</span> <span>→</span>
           </button>
         </div>
       </section>
@@ -296,7 +235,7 @@
             <label class="block text-xs font-semibold text-slate-300">Solicitar Informe Detallado & Protocolo de Actuación:</label>
             <div class="flex flex-col sm:flex-row gap-2">
               <input type="email" required id="user-email" placeholder="tu@email.com" class="flex-grow bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-colors">
-              <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs sm:text-sm px-5 py-3 rounded-xl transition-all active:scale-95 whitespace-nowrap">
+              <button id="submit-btn" type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs sm:text-sm px-5 py-3 rounded-xl transition-all active:scale-95 whitespace-nowrap">
                 Recibir Informe
               </button>
             </div>
@@ -306,6 +245,10 @@
           <div id="success-msg" class="hidden bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 p-4 rounded-xl text-xs sm:text-sm font-semibold mt-4">
             ✓ Expediente preliminar registrado correctamente. El equipo interdisciplinar de Frente a Frente procesará su solicitud con estricta reserva.
           </div>
+          
+          <button type="button" onclick="resetToHome()" class="mt-6 text-xs text-slate-400 hover:text-white underline block mx-auto transition-colors">
+            ← Realizar otra evaluación
+          </button>
         </div>
       </section>
 
@@ -321,116 +264,44 @@
   </footer>
 
   <script>
+    const videoProfiles = {
+      menor: {
+        title: "Tips de Blindaje: Canal Prioritario y Difusión Cero",
+        tag: "AEPD · CÁPSULA ANIMADA PARA MENORES",
+        icon: "⚡",
+        desc: "Aprende con esta animación oficial cómo frenar la difusión de fotos o stickers sin permiso y cómo pedir ayuda urgente de forma totalmente confidencial.",
+        url: "https://www.youtube.com/embed/4y8w0u_vW1w?rel=0&modestbranding=1&enablejsapi=1"
+      },
+      familia: {
+        title: "Pautas de Seguridad y Mediación Parental Digital",
+        tag: "AEPD & INCIBE · GUÍA PARA FAMILIAS",
+        icon: "👨‍👩‍👧",
+        desc: "Consejos clave de la Agencia de Protección de Datos para acompañar el uso seguro de redes, prevenir fraudes y pactar normas saludables en casa.",
+        url: "https://www.youtube.com/embed/Pj1525s077Q?rel=0&modestbranding=1&enablejsapi=1"
+      },
+      docente: {
+        title: "Protocolo de Protección de Datos y Ciberacoso Escolar",
+        tag: "AEPD · PROTOCOLO PARA DOCENTES Y CENTROS",
+        icon: "🏫",
+        desc: "Guía jurídica y técnica sobre custodia de evidencias, respeto a la privacidad en el aula y responsabilidades del centro ante incidentes digitales.",
+        url: "https://www.youtube.com/embed/yQ0V47c6g_k?rel=0&modestbranding=1&enablejsapi=1"
+      }
+    };
+
     const quizData = {
       menor: [
-        {
-          cat: "Privacidad & Contactos Desconocidos",
-          q: "1. ¿Te ha contactado algún perfil desconocido en Instagram, TikTok o Discord ofreciéndote regalos, dinero en juegos o pidiéndote guardar el secreto?",
-          a: [
-            { text: "Nunca o los bloqueo al primer mensaje sospechoso.", points: 0, emoji: "🛡️" },
-            { text: "Me ha pasado alguna vez; no contesté pero me dio desconfianza.", points: 2, emoji: "👀" },
-            { text: "He mantenido conversación o he compartido datos personales.", points: 4, emoji: "⚠️" }
-          ]
-        },
-        {
-          cat: "Presión de Grupo & Difusión",
-          q: "2. En grupos de clase o de amigos, ¿has visto compartir fotos tomadas a escondidas, capturas íntimas o 'stickers' para burlarse de alguien?",
-          a: [
-            { text: "No, en mis grupos no se consienten esas humillaciones.", points: 0, emoji: "👏" },
-            { text: "Sí, las he visto pasar, aunque yo no suelo reenviarlas.", points: 2, emoji: "🤐" },
-            { text: "Es muy habitual e incluso me ha tocado a mí sufrirlo.", points: 4, emoji: "🚨" }
-          ]
-        },
-        {
-          cat: "Inteligencia Artificial & Deepfakes",
-          q: "3. ¿Conoces casos o te preocupa que usen fotos tuyas o de compañeros para manipularlas o desnudarlas con Inteligencia Artificial?",
-          a: [
-            { text: "Tengo mis perfiles blindados y no subo fotos que puedan manipularse.", points: 0, emoji: "🔒" },
-            { text: "Me da miedo que ocurra porque mis fotos circulan abiertamente.", points: 2, emoji: "😟" },
-            { text: "Ya ha ocurrido en mi instituto o círculo cercano.", points: 4, emoji: "🛑" }
-          ]
-        },
-        {
-          cat: "Bienestar & Sueño",
-          q: "4. ¿Te quedas con el móvil en la cama mirando TikTok o vídeos hasta altas horas de la madrugada impidiéndote descansar?",
-          a: [
-            { text: "No, lo apago o lo dejo fuera antes de dormir.", points: 0, emoji: "😴" },
-            { text: "A menudo me quedo desvelado/a más tiempo del que pretendía.", points: 2, emoji: "🌙" },
-            { text: "Todas las noches; no soy capaz de desconectar el móvil para dormir.", points: 3, emoji: "📱" }
-          ]
-        },
-        {
-          cat: "FOMO & Notificaciones",
-          q: "5. Cuando no puedes mirar el móvil durante varias horas seguidas (clases o actividades), ¿qué experimentas?",
-          a: [
-            { text: "Tranquilidad total, disfruto de lo que estoy haciendo.", points: 0, emoji: "🧘" },
-            { text: "Inquietud moderada o curiosidad por revisar qué mensajes tengo.", points: 2, emoji: "⏳" },
-            { text: "Ansiedad intensa o sensación constante de quedarme fuera del grupo.", points: 3, emoji: "⚡" }
-          ]
-        },
-        {
-          cat: "Sexting & Presiones",
-          q: "6. Según estadísticas de UNICEF, a 1 de cada 10 menores les piden fotos íntimas. ¿Alguna vez alguien ha insistido en que le mandes fotos privadas?",
-          a: [
-            { text: "Nunca me lo han pedido o me he negado tajantemente.", points: 0, emoji: "🚫" },
-            { text: "Me han presionado sutilmente con la excusa de la confianza.", points: 2, emoji: "😬" },
-            { text: "He llegado a ceder por presión o miedo al rechazo.", points: 4, emoji: "🆘" }
-          ]
-        },
-        {
-          cat: "Relaciones & Control Digital",
-          q: "7. En tus relaciones sentimentales o de amistad, ¿alguien te exige ubicación en tiempo real o revisar tus conversaciones?",
-          a: [
-            { text: "No, nadie invade mi intimidad ni controla a quién sigo.", points: 0, emoji: "🤝" },
-            { text: "Alguna vez me han hecho comentarios celosos por contestar tarde.", points: 2, emoji: "🧐" },
-            { text: "Tienen mis contraseñas o me exigen pruebas de dónde estoy.", points: 4, emoji: "⚠️" }
-          ]
-        },
-        {
-          cat: "Autoestima & Filtros",
-          q: "8. ¿Publicas fotos tuyas en redes únicamente si tienen filtros que cambien tu aspecto o te obsesiona el número de 'likes' que recibes?",
-          a: [
-            { text: "Me da igual la cantidad de likes o no utilizo filtros corporales.", points: 0, emoji: "😎" },
-            { text: "A veces borro fotos si no llegan a la interacción esperada.", points: 2, emoji: "💔" },
-            { text: "Me genera malestar grave compararme con los cuerpos y vidas de las redes.", points: 3, emoji: "🥀" }
-          ]
-        },
-        {
-          cat: "Contenidos Violentos o Explícitos",
-          q: "9. ¿Te has topado de forma repentina en tu feed con vídeos de peleas violentas, retos lesivos o pornografía?",
-          a: [
-            { text: "Rara vez o los denuncio y bloqueo el contenido inmediatamente.", points: 0, emoji: "🧹" },
-            { text: "Aparecen con cierta frecuencia en los algoritmos.", points: 2, emoji: "⚠️" },
-            { text: "Consumo o recibo esos contenidos casi a diario sin buscarlo.", points: 3, emoji: "💥" }
-          ]
-        },
-        {
-          cat: "Juegos Online & Cajas de Botín",
-          q: "10. En juegos online, ¿has sentido el impulso incontrolable de gastar dinero para mejorar personajes o ganar partidas?",
-          a: [
-            { text: "Juego por diversión sin gastar ni obsesionarme.", points: 0, emoji: "🎮" },
-            { text: "A veces he gastado dinero de la paga o me frustro mucho si pierdo.", points: 2, emoji: "🪙" },
-            { text: "He usado tarjetas sin permiso o paso horas pensando en compras del juego.", points: 4, emoji: "🎰" }
-          ]
-        },
-        {
-          cat: "Identidad & Huella Digital",
-          q: "11. ¿Tienes tus perfiles en 'Modo Público' mostrando tu nombre real, instituto o lugares que frecuentas?",
-          a: [
-            { text: "Mis cuentas son privadas y solo admito a amistades reales.", points: 0, emoji: "🔐" },
-            { text: "Tengo alguna cuenta abierta pero no pongo datos muy concretos.", points: 2, emoji: "🌍" },
-            { text: "Público al 100%, con ubicación y muchos desconocidos agregados.", points: 3, emoji: "📢" }
-          ]
-        },
-        {
-          cat: "Canal de Ayuda y Confianza",
-          q: "12. Si hoy tuvieras un problema grave en redes (chantaje, acoso o filtración), ¿acudirías con confianza a tus padres o profesores?",
-          a: [
-            { text: "Sí, sin dudarlo; sé que me ayudarían sin castigarme.", points: 0, emoji: "❤️" },
-            { text: "Tendría mucho miedo de que me quiten el teléfono o se enfaden.", points: 2, emoji: "🤐" },
-            { text: "Jamás se lo contaría; intentaría resolverlo a solas.", points: 4, emoji: "🚨" }
-          ]
-        }
+        { cat: "Privacidad & Contactos Desconocidos", q: "1. ¿Te ha contactado algún perfil desconocido en Instagram, TikTok o Discord ofreciéndote regalos, dinero en juegos o pidiéndote guardar el secreto?", a: [{ text: "Nunca o los bloqueo al primer mensaje sospechoso.", points: 0, emoji: "🛡️" }, { text: "Me ha pasado alguna vez; no contesté pero me dio desconfianza.", points: 2, emoji: "👀" }, { text: "He mantenido conversación o he compartido datos personales.", points: 4, emoji: "⚠️" }] },
+        { cat: "Presión de Grupo & Difusión", q: "2. En grupos de clase o de amigos, ¿has visto compartir fotos tomadas a escondidas, capturas íntimas o 'stickers' para burlarse de alguien?", a: [{ text: "No, en mis grupos no se consienten esas humillaciones.", points: 0, emoji: "👏" }, { text: "Sí, las he visto pasar, aunque yo no suelo reenviarlas.", points: 2, emoji: "🤐" }, { text: "Es muy habitual e incluso me ha tocado a mí sufrirlo.", points: 4, emoji: "🚨" }] },
+        { cat: "Inteligencia Artificial & Deepfakes", q: "3. ¿Conoces casos o te preocupa que usen fotos tuyas o de compañeros para manipularlas o desnudarlas con Inteligencia Artificial?", a: [{ text: "Tengo mis perfiles blindados y no subo fotos que puedan manipularse.", points: 0, emoji: "🔒" }, { text: "Me da miedo que ocurra porque mis fotos circulan abiertamente.", points: 2, emoji: "😟" }, { text: "Ya ha ocurrido en mi instituto o círculo cercano.", points: 4, emoji: "🛑" }] },
+        { cat: "Bienestar & Sueño", q: "4. ¿Te quedas con el móvil en la cama mirando TikTok o vídeos hasta altas horas de la madrugada impidiéndote descansar?", a: [{ text: "No, lo apago o lo dejo fuera antes de dormir.", points: 0, emoji: "😴" }, { text: "A menudo me quedo desvelado/a más tiempo del que pretendía.", points: 2, emoji: "🌙" }, { text: "Todas las noches; no soy capaz de desconectar el móvil para dormir.", points: 3, emoji: "📱" }] },
+        { cat: "FOMO & Notificaciones", q: "5. Cuando no puedes mirar el móvil durante varias horas seguidas (clases o actividades), ¿qué experimentas?", a: [{ text: "Tranquilidad total, disfruto de lo que estoy haciendo.", points: 0, emoji: "🧘" }, { text: "Inquietud moderada o curiosidad por revisar qué mensajes tengo.", points: 2, emoji: "⏳" }, { text: "Ansiedad intensa o sensación constante de quedarme fuera del grupo.", points: 3, emoji: "⚡" }] },
+        { cat: "Sexting & Presiones", q: "6. Según estadísticas de UNICEF, a 1 de cada 10 menores les piden fotos íntimas. ¿Alguna vez alguien ha insistido en que le mandes fotos privadas?", a: [{ text: "Nunca me lo han pedido o me he negado tajantemente.", points: 0, emoji: "🚫" }, { text: "Me han presionado sutilmente con la excusa de la confianza.", points: 2, emoji: "😬" }, { text: "He llegado a ceder por presión o miedo al rechazo.", points: 4, emoji: "🆘" }] },
+        { cat: "Relaciones & Control Digital", q: "7. En tus relaciones sentimentales o de amistad, ¿alguien te exige ubicación en tiempo real o revisar tus conversaciones?", a: [{ text: "No, nadie invade mi intimidad ni controla a quién sigo.", points: 0, emoji: "🤝" }, { text: "Alguna vez me han hecho comentarios celosos por contestar tarde.", points: 2, emoji: "🧐" }, { text: "Tienen mis contraseñas o me exigen pruebas de dónde estoy.", points: 4, emoji: "⚠️" }] },
+        { cat: "Autoestima & Filtros", q: "8. ¿Publicas fotos tuyas en redes únicamente si tienen filtros que cambien tu aspecto o te obsesiona el número de 'likes' que recibes?", a: [{ text: "Me da igual la cantidad de likes o no utilizo filtros corporales.", points: 0, emoji: "😎" }, { text: "A veces borro fotos si no llegan a la interacción esperada.", points: 2, emoji: "💔" }, { text: "Me genera malestar grave compararme con los cuerpos y vidas de las redes.", points: 3, emoji: "🥀" }] },
+        { cat: "Contenidos Violentos o Explícitos", q: "9. ¿Te has topado de forma repentina en tu feed con vídeos de peleas violentas, retos lesivos o pornografía?", a: [{ text: "Rara vez o los denuncio y bloqueo el contenido inmediatamente.", points: 0, emoji: "🧹" }, { text: "Aparecen con cierta frecuencia en los algoritmos.", points: 2, emoji: "⚠️" }, { text: "Consumo o recibo esos contenidos casi a diario sin buscarlo.", points: 3, emoji: "💥" }] },
+        { cat: "Juegos Online & Cajas de Botín", q: "10. En juegos online, ¿has sentido el impulso incontrolable de gastar dinero para mejorar personajes o ganar partidas?", a: [{ text: "Juego por diversión sin gastar ni obsesionarme.", points: 0, emoji: "🎮" }, { text: "A veces he gastado dinero de la paga o me frustro mucho si pierdo.", points: 2, emoji: "🪙" }, { text: "He usado tarjetas sin permiso o paso horas pensando en compras del juego.", points: 4, emoji: "🎰" }] },
+        { cat: "Identidad & Huella Digital", q: "11. ¿Tienes tus perfiles en 'Modo Público' mostrando tu nombre real, instituto o lugares que frecuentas?", a: [{ text: "Mis cuentas son privadas y solo admito a amistades reales.", points: 0, emoji: "🔐" }, { text: "Tengo alguna cuenta abierta pero no pongo datos muy concretos.", points: 2, emoji: "🌍" }, { text: "Público al 100%, con ubicación y muchos desconocidos agregados.", points: 3, emoji: "📢" }] },
+        { cat: "Canal de Ayuda y Confianza", q: "12. Si hoy tuvieras un problema grave en redes (chantaje, acoso o filtración), ¿acudirías con confianza a tus padres o profesores?", a: [{ text: "Sí, sin dudarlo; sé que me ayudarían sin castigarme.", points: 0, emoji: "❤️" }, { text: "Tendría mucho miedo de que me quiten el teléfono o se enfaden.", points: 2, emoji: "🤐" }, { text: "Jamás se lo contaría; intentaría resolverlo a solas.", points: 4, emoji: "🚨" }] }
       ],
       familia: [
         { cat: "Normativa en el Hogar", q: "1. ¿Tienen pactadas normas concretas sobre horarios de desconexión nocturna de pantallas?", a: [{ text: "Sí, no duermen con dispositivos en el dormitorio.", points: 0 }, { text: "Hay normas pero cuesta mucho que se cumplan.", points: 2 }, { text: "Es una fuente constante de discusiones o no hay límites.", points: 4 }] },
@@ -468,15 +339,15 @@
     let totalScore = 0;
     let answersLog = [];
     let isAnswering = false;
-    let notebookTimers = [];
 
-    function clearNotebookTimers() {
-      notebookTimers.forEach(t => clearTimeout(t));
-      notebookTimers = [];
+    function resetVideoContainer() {
+      const wrapper = document.getElementById('video-wrapper');
+      if (wrapper) {
+        wrapper.innerHTML = '';
+      }
     }
 
     function startTest(profile, detail) {
-      clearNotebookTimers();
       currentProfile = profile;
       currentDetail = detail;
       currentQuestionIdx = 0;
@@ -484,8 +355,10 @@
       answersLog = [];
       isAnswering = false;
 
+      resetVideoContainer();
+
       document.getElementById('step-intro').classList.add('hidden');
-      document.getElementById('step-notebook').classList.add('hidden');
+      document.getElementById('step-video').classList.add('hidden');
       document.getElementById('step-result').classList.add('hidden');
       document.getElementById('step-quiz').classList.remove('hidden');
       
@@ -548,84 +421,45 @@
         setTimeout(() => {
           renderQuestion();
           isAnswering = false;
-        }, 150);
+        }, 120);
       } else {
         setTimeout(() => {
           isAnswering = false;
-          if (currentProfile === 'menor') {
-            launchDigitalNotebook();
-          } else {
-            showFinalResultsNow();
-          }
-        }, 200);
+          launchVideoStage();
+        }, 150);
       }
     }
 
-    function launchDigitalNotebook() {
-      clearNotebookTimers();
+    function launchVideoStage() {
       document.getElementById('step-quiz').classList.add('hidden');
-      document.getElementById('step-notebook').classList.remove('hidden');
+      document.getElementById('step-video').classList.remove('hidden');
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
-      const n1 = document.getElementById('note-1');
-      const n2 = document.getElementById('note-2');
-      const n3 = document.getElementById('note-3');
-      const pBar = document.getElementById('notebook-progress');
-      const pText = document.getElementById('notebook-percent');
-      const sText = document.getElementById('notebook-status-text');
-      const stamp = document.getElementById('notebook-stamp');
+      const config = videoProfiles[currentProfile];
+      if (config) {
+        document.getElementById('video-title').innerText = config.title;
+        document.getElementById('video-tag').innerText = config.tag;
+        document.getElementById('video-icon').innerText = config.icon;
+        document.getElementById('video-description').innerText = config.desc;
 
-      // Reseteo forzado de estados para repetición limpia
-      n1.className = "p-3.5 bg-indigo-950/80 border-l-4 border-indigo-400 rounded-r-xl transition-all duration-700 opacity-0 transform translate-x-3";
-      n2.className = "p-3.5 bg-sky-950/80 border-l-4 border-sky-400 rounded-r-xl transition-all duration-700 opacity-0 transform translate-x-3";
-      n3.className = "p-3.5 bg-emerald-950/80 border-l-4 border-emerald-400 rounded-r-xl transition-all duration-700 opacity-0 transform translate-x-3";
-      stamp.classList.add('hidden');
-      pBar.style.width = '0%';
-      pText.innerText = '0%';
-      sText.innerText = 'Cargando protocolo de blindaje preventivo...';
-
-      notebookTimers.push(setTimeout(() => {
-        pBar.style.width = '25%';
-        pText.innerText = '25%';
-      }, 300));
-
-      notebookTimers.push(setTimeout(() => {
-        n1.classList.remove('opacity-0', 'translate-x-3');
-        pBar.style.width = '50%';
-        pText.innerText = '50%';
-        sText.innerText = 'Pauta 1: Protección de identidad digital activa...';
-      }, 1200));
-
-      notebookTimers.push(setTimeout(() => {
-        n2.classList.remove('opacity-0', 'translate-x-3');
-        pBar.style.width = '75%';
-        pText.innerText = '75%';
-        sText.innerText = 'Pauta 2: Responsabilidad y corte de cadenas...';
-      }, 4200));
-
-      notebookTimers.push(setTimeout(() => {
-        n3.classList.remove('opacity-0', 'translate-x-3');
-        pBar.style.width = '90%';
-        pText.innerText = '90%';
-        sText.innerText = 'Pauta 3: Vías de auxilio y confidencialidad...';
-      }, 7200));
-
-      notebookTimers.push(setTimeout(() => {
-        pBar.style.width = '100%';
-        pText.innerText = '100%';
-        sText.innerText = 'Blindaje analizado con éxito.';
-        stamp.classList.remove('hidden');
-      }, 10000));
-
-      notebookTimers.push(setTimeout(() => {
-        showFinalResultsNow();
-      }, 12500));
+        const wrapper = document.getElementById('video-wrapper');
+        wrapper.innerHTML = `
+          <iframe 
+            src="${config.url}" 
+            title="Cápsula de Seguridad Digital" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            allowfullscreen>
+          </iframe>
+        `;
+      }
     }
 
     function showFinalResultsNow() {
-      clearNotebookTimers();
+      resetVideoContainer();
+
       document.getElementById('step-quiz').classList.add('hidden');
-      document.getElementById('step-notebook').classList.add('hidden');
+      document.getElementById('step-video').classList.add('hidden');
       document.getElementById('step-result').classList.remove('hidden');
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
@@ -678,8 +512,18 @@
     function submitResults(e) {
       e.preventDefault();
       const emailInput = document.getElementById('user-email');
+      const submitBtn = document.getElementById('submit-btn');
       const email = emailInput ? emailInput.value.trim() : '';
-      
+
+      if (!email || !email.includes('@')) {
+        return;
+      }
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerText = "Enviando...";
+      }
+
       const payload = {
         marca: "Frente a Frente",
         perfil: currentProfile,
@@ -689,8 +533,7 @@
         respuestas: answersLog,
         timestamp: new Date().toISOString()
       };
-      
-      // Respaldo de seguridad en el almacenamiento local del dispositivo
+
       try {
         const historico = JSON.parse(localStorage.getItem('faf_expedientes') || '[]');
         historico.push(payload);
@@ -699,10 +542,31 @@
         console.warn("Almacenamiento local restringido", err);
       }
 
-      console.log("Expediente pericial emitido:", payload);
-
       document.getElementById('contact-form').classList.add('hidden');
       document.getElementById('success-msg').classList.remove('hidden');
+    }
+
+    function resetToHome() {
+      resetVideoContainer();
+      document.getElementById('step-result').classList.add('hidden');
+      document.getElementById('step-video').classList.add('hidden');
+      document.getElementById('step-quiz').classList.add('hidden');
+      document.getElementById('step-intro').classList.remove('hidden');
+      
+      const form = document.getElementById('contact-form');
+      const success = document.getElementById('success-msg');
+      const emailInput = document.getElementById('user-email');
+      const submitBtn = document.getElementById('submit-btn');
+
+      if (form) form.classList.remove('hidden');
+      if (success) success.classList.add('hidden');
+      if (emailInput) emailInput.value = '';
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Recibir Informe";
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   </script>
 </body>
