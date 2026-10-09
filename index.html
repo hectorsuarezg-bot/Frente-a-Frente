@@ -26,20 +26,11 @@
       50% { opacity: 1; transform: scale(1.2) translateY(-10px); }
       100% { opacity: 0; transform: scale(1) translateY(-25px); }
     }
-    .video-container {
-      position: relative;
-      padding-bottom: 56.25%;
-      height: 0;
-      overflow: hidden;
+    @keyframes pulseCard {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.015); }
     }
-    .video-container iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border-radius: 1rem;
-    }
+    .pulse-anim { animation: pulseCard 3s infinite ease-in-out; }
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-indigo-500 selection:text-white relative">
@@ -192,7 +183,7 @@
         </div>
       </section>
 
-      <!-- PANTALLA INTERMEDIA: REPRODUCTOR DE VÍDEOS DE SEGURIDAD (DIFERENCIADO POR PERFIL) -->
+      <!-- PANTALLA INTERMEDIA: CÁPSULA FORMATIVA CON TIPS Y MEDIDAS OFICIALES -->
       <section id="step-video" class="hidden fade-enter">
         <div class="bg-slate-900/95 border-2 border-indigo-500/40 rounded-3xl p-5 sm:p-7 shadow-2xl relative overflow-hidden backdrop-blur-md">
           
@@ -206,9 +197,18 @@
 
           <p id="video-description" class="text-xs text-slate-300 mb-4 leading-relaxed"></p>
 
-          <!-- Contenedor Responsivo del Vídeo Oficial -->
-          <div id="video-wrapper" class="video-container rounded-2xl border border-slate-800 shadow-inner bg-slate-950 mb-5">
-            <!-- El iframe se inyecta programáticamente para evitar bloqueos y fugas -->
+          <!-- Tarjeta Animada con Tips Visuales e Ilustrados -->
+          <div id="video-card-container" class="rounded-2xl border border-slate-800 p-4 sm:p-5 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 mb-5 pulse-anim shadow-inner">
+            <div id="video-tips-content" class="space-y-3">
+              <!-- Inyección de pautas dinámicas según el perfil -->
+            </div>
+          </div>
+
+          <!-- Enlace oficial directo verificado -->
+          <div class="text-center mb-4">
+            <a id="video-ext-link" href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs text-indigo-400 hover:text-indigo-300 underline font-medium">
+              <span>🔗 Consultar portal oficial de protección digital</span> <span>↗</span>
+            </a>
           </div>
 
           <!-- Botón de avance al diagnóstico final -->
@@ -264,27 +264,42 @@
   </footer>
 
   <script>
-    const videoProfiles = {
+    const videoData = {
       menor: {
-        title: "Tips de Blindaje: Canal Prioritario y Difusión Cero",
-        tag: "AEPD · CÁPSULA ANIMADA PARA MENORES",
+        title: "Tips de Blindaje para Menores (AEPD / INCIBE)",
+        tag: "CÁPSULA ILUSTRADA & MEDIDAS DE SEGURIDAD",
         icon: "⚡",
-        desc: "Aprende con esta animación oficial cómo frenar la difusión de fotos o stickers sin permiso y cómo pedir ayuda urgente de forma totalmente confidencial.",
-        url: "https://www.youtube.com/embed/4y8w0u_vW1w?rel=0&modestbranding=1&enablejsapi=1"
+        desc: "Pautas de actuación urgente ante filtración de fotos, perfiles falsos y ciberacoso:",
+        extUrl: "https://www.tudecideseninternet.es/",
+        tips: [
+          { icon: "🛑", title: "Corta la difusión de inmediato", text: "Reenviar fotos íntimas o stickers humillantes es un delito penal tipificado. No compartas y sal del chat." },
+          { icon: "🚨", title: "Canal Prioritario AEPD", text: "Existe una vía urgente y gratuita para exigir la retirada en pocas horas de vídeos o fotos difundidas sin tu consentimiento." },
+          { icon: "🛡️", title: "Guarda las pruebas sin borrar", text: "Haz capturas de pantalla de los enlaces, mensajes y perfiles antes de bloquear para poder acreditar los hechos ante tus tutores o la policía." }
+        ]
       },
       familia: {
-        title: "Pautas de Seguridad y Mediación Parental Digital",
-        tag: "AEPD & INCIBE · GUÍA PARA FAMILIAS",
+        title: "Guía de Seguridad Digital para Familias (AEPD / INCIBE)",
+        tag: "PAUTAS DE MEDIACIÓN PARENTAL",
         icon: "👨‍👩‍👧",
-        desc: "Consejos clave de la Agencia de Protección de Datos para acompañar el uso seguro de redes, prevenir fraudes y pactar normas saludables en casa.",
-        url: "https://www.youtube.com/embed/Pj1525s077Q?rel=0&modestbranding=1&enablejsapi=1"
+        desc: "Recomendaciones oficiales para proteger a los menores en el entorno doméstico:",
+        extUrl: "https://www.is4k.es/familias",
+        tips: [
+          { icon: "🌙", title: "Pacto de desconexión nocturna", text: "Retirar los dispositivos del dormitorio por la noche previene el insomnio, la dependencia y la sobreexposición silenciosa." },
+          { icon: "💳", title: "Control de compras y micropagos", text: "Configurar contraseñas obligatorias y doble factor en App Store, Google Play y videojuegos para evitar cargos no autorizados." },
+          { icon: "🤝", title: "Pacto de confianza sin castigo", text: "Garantizar al menor que si sufre chantaje o acoso online podrá pedir ayuda en casa sin miedo a que le castiguen quitándole el teléfono." }
+        ]
       },
       docente: {
-        title: "Protocolo de Protección de Datos y Ciberacoso Escolar",
-        tag: "AEPD · PROTOCOLO PARA DOCENTES Y CENTROS",
+        title: "Protocolo de Ciberconvivencia Escolar (AEPD / LOPIVI)",
+        tag: "MEDIDAS DE INTERVENCIÓN EN EL AULA",
         icon: "🏫",
-        desc: "Guía jurídica y técnica sobre custodia de evidencias, respeto a la privacidad en el aula y responsabilidades del centro ante incidentes digitales.",
-        url: "https://www.youtube.com/embed/yQ0V47c6g_k?rel=0&modestbranding=1&enablejsapi=1"
+        desc: "Criterios jurídicos y preventivos de actuación para equipos docentes y directivos:",
+        extUrl: "https://www.aepd.es/areas-de-actuacion/educacion",
+        tips: [
+          { icon: "⚖️", title: "Custodia de evidencias digitales", text: "Preservar las capturas, enlaces y metadatos de los incidentes en grupos escolares para remitirlos formalmente al Coordinador de Bienestar." },
+          { icon: "📋", title: "Activación inmediata del protocolo LOPIVI", text: "Intervenir formalmente ante el primer indicio de ciberacoso entre alumnos, evitando mediaciones informales que dejen desprotegida a la víctima." },
+          { icon: "🔒", title: "Protección de datos en grupos de clase", text: "Prohibir la captación y difusión no autorizada de fotos o grabaciones de docentes o alumnado dentro del centro escolar." }
+        ]
       }
     };
 
@@ -340,13 +355,6 @@
     let answersLog = [];
     let isAnswering = false;
 
-    function resetVideoContainer() {
-      const wrapper = document.getElementById('video-wrapper');
-      if (wrapper) {
-        wrapper.innerHTML = '';
-      }
-    }
-
     function startTest(profile, detail) {
       currentProfile = profile;
       currentDetail = detail;
@@ -354,8 +362,6 @@
       totalScore = 0;
       answersLog = [];
       isAnswering = false;
-
-      resetVideoContainer();
 
       document.getElementById('step-intro').classList.add('hidden');
       document.getElementById('step-video').classList.add('hidden');
@@ -435,29 +441,33 @@
       document.getElementById('step-video').classList.remove('hidden');
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
-      const config = videoProfiles[currentProfile];
+      const config = videoData[currentProfile];
       if (config) {
         document.getElementById('video-title').innerText = config.title;
         document.getElementById('video-tag').innerText = config.tag;
         document.getElementById('video-icon').innerText = config.icon;
         document.getElementById('video-description').innerText = config.desc;
+        document.getElementById('video-ext-link').href = config.extUrl;
 
-        const wrapper = document.getElementById('video-wrapper');
-        wrapper.innerHTML = `
-          <iframe 
-            src="${config.url}" 
-            title="Cápsula de Seguridad Digital" 
-            frameborder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-            allowfullscreen>
-          </iframe>
-        `;
+        const tipsContainer = document.getElementById('video-tips-content');
+        tipsContainer.innerHTML = '';
+
+        config.tips.forEach((tip) => {
+          const item = document.createElement('div');
+          item.className = "p-3.5 bg-slate-900/90 rounded-xl border border-slate-800 flex items-start gap-3 text-left shadow-sm";
+          item.innerHTML = `
+            <span class="text-2xl flex-shrink-0">${tip.icon}</span>
+            <div>
+              <h4 class="text-xs sm:text-sm font-bold text-white mb-0.5">${tip.title}</h4>
+              <p class="text-[11px] sm:text-xs text-slate-300 leading-relaxed">${tip.text}</p>
+            </div>
+          `;
+          tipsContainer.appendChild(item);
+        });
       }
     }
 
     function showFinalResultsNow() {
-      resetVideoContainer();
-
       document.getElementById('step-quiz').classList.add('hidden');
       document.getElementById('step-video').classList.add('hidden');
       document.getElementById('step-result').classList.remove('hidden');
@@ -547,7 +557,6 @@
     }
 
     function resetToHome() {
-      resetVideoContainer();
       document.getElementById('step-result').classList.add('hidden');
       document.getElementById('step-video').classList.add('hidden');
       document.getElementById('step-quiz').classList.add('hidden');
