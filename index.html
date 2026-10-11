@@ -49,7 +49,7 @@
     >
   </div>
 
-  <!-- Animación de Emoticono al responder (Menores) -->
+  <!-- Animación de Emoticono al responder -->
   <div id="emoji-floater" style="display: none;" class="fixed inset-0 pointer-events-none z-50 flex items-center justify-center">
     <span id="emoji-char" class="text-7xl emoji-pop filter drop-shadow-lg"></span>
   </div>
@@ -80,9 +80,9 @@
   <main class="flex-grow flex items-center justify-center px-4 py-6 sm:py-10 relative z-10">
     <div class="w-full max-w-xl mx-auto">
       
-      <!-- PANTALLA 1: Portada, Selección Inmediata y Acceso Directo a Vídeos -->
+      <!-- PANTALLA 1: Portada y Selección Inmediata -->
       <section id="step-intro" class="fade-enter text-center">
-        <!-- LOGO CENTRAL EXTRA GRANDE Y LEGIBLE -->
+        <!-- LOGO CENTRAL -->
         <div class="flex justify-center mb-6">
           <div class="relative group">
             <div class="absolute -inset-1.5 bg-gradient-to-r from-indigo-500 via-sky-500 to-emerald-500 rounded-3xl blur-md opacity-35 group-hover:opacity-65 transition duration-500"></div>
@@ -167,14 +167,14 @@
 
         </div>
 
-        <!-- SECCIÓN DE VÍDEOS EN PORTADA: ACCESO DIRECTO EN CUALQUIER MOMENTO -->
+        <!-- SECCIÓN DE VÍDEOS EN PORTADA: ACCESO DIRECTO -->
         <div class="p-4 sm:p-5 rounded-2xl bg-slate-900/80 border border-slate-800 text-left backdrop-blur-sm">
           <div class="flex items-center gap-2 mb-2">
             <span class="text-lg">🎬</span>
             <h3 class="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">Cápsulas de Seguridad Digital (AEPD / INCIBE)</h3>
           </div>
           <p class="text-[11px] text-slate-400 mb-3">
-            Accede y visualiza directamente los vídeos animados con medidas de protección preventiva en cualquier momento:
+            Visualiza las cápsulas audiovisuales con medidas de protección preventiva en cualquier momento:
           </p>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
             <button type="button" onclick="watchVideoDirectly('menor')" class="p-3 rounded-xl bg-indigo-950/60 hover:bg-indigo-600 border border-indigo-500/30 text-left transition-all active:scale-95 group">
@@ -216,7 +216,7 @@
         </div>
       </section>
 
-      <!-- PANTALLA INTERMEDIA: REPRODUCTOR DE VÍDEO ANIMADO -->
+      <!-- PANTALLA 3A: VÍDEOS EDUCATIVOS POST-TEST (MOTOR NATIVO INTERNO) -->
       <section id="step-video" class="hidden fade-enter">
         <div class="bg-slate-900/95 border-2 border-indigo-500/40 rounded-3xl p-5 sm:p-7 shadow-2xl relative overflow-hidden backdrop-blur-md">
           
@@ -230,32 +230,18 @@
 
           <p id="video-description" class="text-xs text-slate-300 mb-3 leading-relaxed"></p>
 
-          <!-- ESCENARIO DEL VÍDEO (24s - 6s POR ESCENA) -->
+          <!-- ESCENARIO DEL VÍDEO FORMATIVO -->
           <div class="relative rounded-2xl overflow-hidden border border-slate-800 shadow-2xl mb-3">
             <div id="player-screen" class="screen-stage w-full flex flex-col items-center justify-center p-6 sm:p-8 text-center relative select-none">
-              
-              <!-- Dibujo animado -->
-              <div id="anim-frame-icon" class="text-6xl sm:text-7xl mb-3 transition-transform duration-700 transform hover:scale-110">
-                🛡️
-              </div>
-              
-              <!-- Título de la escena -->
-              <h4 id="anim-frame-title" class="text-base sm:text-lg font-bold text-white mb-2 transition-opacity duration-500">
-                Iniciando cápsula...
-              </h4>
-              
-              <!-- Subtítulo explicativo -->
-              <p id="anim-frame-sub" class="text-xs sm:text-sm text-indigo-200 max-w-md mx-auto leading-relaxed transition-opacity duration-500 font-medium">
-                Cargando recomendaciones oficiales de la Agencia de Protección de Datos...
-              </p>
-
-              <!-- Indicador de tiempo -->
+              <div id="anim-frame-icon" class="text-6xl sm:text-7xl mb-3 transition-transform duration-700 transform hover:scale-110">🛡️</div>
+              <h4 id="anim-frame-title" class="text-base sm:text-lg font-bold text-white mb-2 transition-opacity duration-500">Iniciando cápsula...</h4>
+              <p id="anim-frame-sub" class="text-xs sm:text-sm text-indigo-200 max-w-md mx-auto leading-relaxed transition-opacity duration-500 font-medium">Cargando recomendaciones oficiales...</p>
               <div class="absolute top-3 right-3 text-[10px] font-mono bg-black/50 text-slate-400 px-2.5 py-1 rounded-md border border-slate-800">
                 REC ● <span id="video-timer">00:00</span> / 00:24
               </div>
             </div>
 
-            <!-- Controles del reproductor -->
+            <!-- Controles del reproductor animado -->
             <div class="bg-slate-950 p-3 flex items-center gap-3 border-t border-slate-800 text-xs">
               <button type="button" onclick="togglePlayVideo()" id="play-btn" class="w-8 h-8 flex items-center justify-center rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold transition-all shadow-md active:scale-95" title="Reproducir / Pausar">
                 ❚❚
@@ -271,12 +257,50 @@
 
           <!-- Botón de avance según el contexto -->
           <button id="video-next-btn" type="button" onclick="handleVideoNextAction()" class="w-full bg-gradient-to-r from-indigo-600 via-sky-600 to-indigo-600 hover:opacity-90 text-white font-bold text-xs sm:text-sm py-3 rounded-xl transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2">
-            <span>Continuar a mi Dictamen de Blindaje</span> <span>→</span>
+            <span>Continuar al Vídeo Especial de Cierre</span> <span>→</span>
           </button>
         </div>
       </section>
 
-      <!-- PANTALLA 4: Dictamen de Resultados -->
+      <!-- PANTALLA 3B: VÍDEO EXCLUSIVO MP4 (COLOCADO ENTRE EL VÍDEO INICIAL Y EL CORREO) -->
+      <section id="step-custom-video" class="hidden fade-enter">
+        <div class="bg-slate-900/95 border-2 border-indigo-500/40 rounded-3xl p-5 sm:p-7 shadow-2xl relative overflow-hidden backdrop-blur-md">
+          
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <span class="text-[10px] uppercase tracking-wider font-bold px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">CÁPSULA EXCLUSIVA</span>
+              <h3 class="text-base sm:text-lg font-extrabold text-white mt-1">Guía Visual de Blindaje y Seguridad Digital</h3>
+            </div>
+            <span class="text-2xl">⚡</span>
+          </div>
+
+          <p class="text-xs text-slate-300 mb-3 leading-relaxed">
+            Visualiza esta cápsula audiovisual de cierre antes de emitir tu dictamen y solicitar el informe pericial:
+          </p>
+
+          <!-- Reproductor Nativo del Archivo MP4 -->
+          <div class="relative rounded-2xl overflow-hidden border border-slate-800 shadow-2xl mb-4 bg-black">
+            <video 
+              id="user-mp4-player" 
+              class="w-full aspect-video object-contain" 
+              controls 
+              playsinline
+              preload="metadata"
+              poster="photo.jpg"
+            >
+              <source src="gemini_generated_video_f8323893.mp4" type="video/mp4">
+              Tu navegador no soporta reproducción de vídeo HTML5.
+            </video>
+          </div>
+
+          <!-- Botón hacia el dictamen y registro de email -->
+          <button type="button" onclick="goToFinalResultsFromCustomVideo()" class="w-full bg-gradient-to-r from-indigo-600 via-sky-600 to-indigo-600 hover:opacity-90 text-white font-bold text-xs sm:text-sm py-3 rounded-xl transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2">
+            <span>Ver mi Dictamen Definitivo & Solicitar Informe</span> <span>→</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- PANTALLA 4: Dictamen de Resultados y Formulario de Correo -->
       <section id="step-result" class="hidden fade-enter">
         <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 text-center shadow-xl backdrop-blur-md">
           <div id="result-icon" class="w-16 h-16 mx-auto mb-3 rounded-2xl flex items-center justify-center text-3xl"></div>
@@ -304,7 +328,7 @@
             ✓ Expediente preliminar registrado correctamente. El equipo interdisciplinar de Frente a Frente procesará su solicitud con estricta reserva.
           </div>
 
-          <!-- BOTÓN DESTACADO PARA VOLVER AL INICIO Y REALIZAR OTRO TEST -->
+          <!-- BOTÓN DESTACADO PARA VOLVER AL INICIO -->
           <div class="mt-6 pt-5 border-t border-slate-800">
             <button type="button" onclick="resetToHome()" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs sm:text-sm py-3 px-4 rounded-xl transition-all border border-slate-700 flex items-center justify-center gap-2 active:scale-95 shadow-md">
               <span>🔄</span> <span>Volver al Inicio y Realizar Otro Test</span>
@@ -330,7 +354,7 @@
         title: "Tips de Seguridad: Canal Prioritario y Privacidad",
         tag: "VÍDEO ANIMADO · PROTOCOLO AEPD",
         icon: "⚡",
-        desc: "Lee con calma estas recomendaciones oficiales antes de ver tu resultado:",
+        desc: "Lee con calma estas recomendaciones oficiales antes de continuar:",
         scenes: [
           { time: 0, icon: "🛡️", title: "1. Blindaje de Perfiles en Redes", text: "Tu intimidad no se negocia: mantén todas tus cuentas en modo privado, no agregues a desconocidos y apaga la ubicación automática de tus fotos." },
           { time: 6, icon: "🚫", title: "2. Rompe la Cadena de Difusión", text: "Reenviar capturas de chats privados, fotos íntimas o stickers para burlarse de alguien es un delito penal. Si te llega algo así, no lo compartas y sal del grupo." },
@@ -420,7 +444,7 @@
     let isAnswering = false;
     let isDirectVideoMode = false;
 
-    // Control del Reproductor
+    // Control de temporizadores
     let videoTimerInterval = null;
     let currentVideoSec = 0;
     let isVideoPlaying = false;
@@ -432,6 +456,12 @@
       }
       isVideoPlaying = false;
       currentVideoSec = 0;
+
+      const mp4Player = document.getElementById('user-mp4-player');
+      if (mp4Player) {
+        mp4Player.pause();
+        mp4Player.currentTime = 0;
+      }
     }
 
     function startTest(profile, detail) {
@@ -447,6 +477,7 @@
 
       document.getElementById('step-intro').classList.add('hidden');
       document.getElementById('step-video').classList.add('hidden');
+      document.getElementById('step-custom-video').classList.add('hidden');
       document.getElementById('step-result').classList.add('hidden');
       document.getElementById('step-quiz').classList.remove('hidden');
       
@@ -461,6 +492,7 @@
 
       document.getElementById('step-intro').classList.add('hidden');
       document.getElementById('step-quiz').classList.add('hidden');
+      document.getElementById('step-custom-video').classList.add('hidden');
       document.getElementById('step-result').classList.add('hidden');
       document.getElementById('step-video').classList.remove('hidden');
 
@@ -476,8 +508,28 @@
       if (isDirectVideoMode) {
         resetToHome();
       } else {
-        showFinalResultsNow();
+        // Enlace al paso intermedio con tu vídeo MP4
+        launchCustomVideoStage();
       }
+    }
+
+    function launchCustomVideoStage() {
+      stopVideoEngine();
+      document.getElementById('step-video').classList.add('hidden');
+      document.getElementById('step-custom-video').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      const mp4Player = document.getElementById('user-mp4-player');
+      if (mp4Player) {
+        mp4Player.currentTime = 0;
+        mp4Player.play().catch(() => {});
+      }
+    }
+
+    function goToFinalResultsFromCustomVideo() {
+      stopVideoEngine();
+      document.getElementById('step-custom-video').classList.add('hidden');
+      showFinalResultsNow();
     }
 
     function renderQuestion() {
@@ -542,7 +594,7 @@
           isDirectVideoMode = false;
           const nextBtn = document.getElementById('video-next-btn');
           if (nextBtn) {
-            nextBtn.innerHTML = `<span>Continuar a mi Dictamen de Blindaje</span> <span>→</span>`;
+            nextBtn.innerHTML = `<span>Continuar al Vídeo Especial de Cierre</span> <span>→</span>`;
           }
           launchVideoStage();
         }, 150);
@@ -630,6 +682,9 @@
     }
 
     function replayVideo() {
+      const story = videoStories[currentProfile];
+      if (!story) return;
+
       currentVideoSec = 0;
       isVideoPlaying = true;
       document.getElementById('play-btn').innerText = '❚❚';
@@ -657,6 +712,7 @@
 
       document.getElementById('step-quiz').classList.add('hidden');
       document.getElementById('step-video').classList.add('hidden');
+      document.getElementById('step-custom-video').classList.add('hidden');
       document.getElementById('step-result').classList.remove('hidden');
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
@@ -747,6 +803,7 @@
       stopVideoEngine();
       isDirectVideoMode = false;
       document.getElementById('step-result').classList.add('hidden');
+      document.getElementById('step-custom-video').classList.add('hidden');
       document.getElementById('step-video').classList.add('hidden');
       document.getElementById('step-quiz').classList.add('hidden');
       document.getElementById('step-intro').classList.remove('hidden');
@@ -769,3 +826,23 @@
   </script>
 </body>
 </html>
+   
+       
+
+      
+     
+       
+        
+         
+
+
+     
+      
+      
+    
+    
+
+   
+         
+
+    
